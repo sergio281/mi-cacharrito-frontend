@@ -1,0 +1,278 @@
+.inicio {
+    overflow-x: hidden;
+}
+
+/* Sección héroe */
+
+.inicio .hero {
+    padding: 136px 0 80px;
+    background-image:
+        linear-gradient(to bottom, rgba(11, 11, 13, 0.85), rgba(11, 11, 13, 0.95)),
+        url("/images/vehiculo-heroe.png");
+    background-size: cover;
+    background-position: center;
+    background-color: #0b0b0d;
+}
+
+.inicio .subtitulo {
+    font-size: 14px;
+    color: #e63946;
+    margin-bottom: 12px;
+}
+
+.inicio .titulo1 {
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 1.1;
+    color: #f4f4f2;
+    max-width: 500px;
+}
+
+@media (max-width: 768px) {
+    .inicio .titulo1 {
+        font-size: 35px;
+    }
+}
+
+.inicio .parrafo1 {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #9a9aa1;
+    max-width: 500px;
+    margin: 20px 0 32px;
+}
+
+.inicio .botones {
+    margin-bottom: 56px;
+}
+
+.inicio .boton-grande {
+    padding: 13px 28px;
+    font-size: 16px;
+}
+
+/* Franja de números */
+
+.inicio .numeros {
+    border-top: 1px solid rgba(244, 244, 242, 0.1);
+    margin-top: 56px;
+    padding-top: 32px;
+}
+
+.inicio .numero {
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: #f4f4f2;
+    margin-bottom: 2px;
+}
+
+.inicio .numero-texto {
+    font-size: 14px;
+    color: #9a9aa1;
+    margin-bottom: 0;
+}
+
+/* Tarjeta buscador */
+
+.inicio .caja-busqueda {
+    background-color: #17171a;
+    border: 1px solid rgba(244, 244, 242, 0.1);
+    border-radius: 10px;
+    padding: 28px;
+}
+
+.inicio .busqueda-titulo {
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    font-size: 18px;
+    color: #f4f4f2;
+    margin-bottom: 18px;
+}
+
+.inicio .opcion-vehiculo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-radius: 6px;
+    background-color: #1f1f23;
+    color: #f4f4f2;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.inicio .opcion-vehiculo:hover {
+    background-color: rgba(230, 57, 70, 0.14);
+}
+
+.inicio .flecha {
+    color: #e63946;
+}
+
+/* Botones generales */
+
+.inicio .boton {
+    font-weight: 500;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.inicio .boton-rojo {
+    background-color: #e63946;
+    color: #ffffff;
+    border: 1px solid #e63946;
+}
+
+.inicio .boton-rojo:hover {
+    background-color: #cf2e3a;
+}
+
+.inicio .boton-blanco {
+    background-color: transparent;
+    color: #f4f4f2;
+    border: 1px solid rgba(244, 244, 242, 0.1);
+}
+
+.inicio .boton-blanco:hover {
+    border-color: #f4f4f2;
+}
+
+/* Sección tipos de vehículo */
+
+.inicio .tipos {
+    padding: 96px 0;
+    background-color: #0b0b0d;
+    border-top: 1px solid rgba(244, 244, 242, 0.1);
+}
+
+.inicio .titulo2 {
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 35px;
+    color: #f4f4f2;
+    margin-bottom: 0;
+}
+
+.inicio .titulo2-centro {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.inicio .parrafo2 {
+    color: #9a9aa1;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.inicio .caja-vehiculo {
+    height: 100%;
+    background-color: #17171a;
+    border: 1px solid rgba(244, 244, 242, 0.1);
+    border-radius: 10px;
+    padding: 32px;
+}
+
+.inicio .caja-vehiculo:hover {
+    border-color: #e63946;
+}
+
+.inicio .caja-numero {
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    color: #e63946;
+    font-size: 15px;
+    margin-bottom: 16px;
+}
+
+.inicio .caja-titulo {
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    font-size: 21px;
+    color: #f4f4f2;
+    margin-bottom: 10px;
+}
+
+.inicio .caja-texto {
+    color: #9a9aa1;
+    font-size: 15px;
+    line-height: 1.55;
+    margin-bottom: 0;
+}
+
+.inicio .caja-cta {
+    background-color: #1f1f23;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Sección cómo funciona */
+
+.inicio .proceso {
+    padding: 96px 0;
+    background-color: #17171a;
+    border-top: 1px solid rgba(244, 244, 242, 0.1);
+    border-bottom: 1px solid rgba(244, 244, 242, 0.1);
+}
+
+.inicio .paso {
+    height: 100%;
+    padding-top: 24px;
+    border-top: 2px solid #e63946;
+}
+
+.inicio .paso-numero {
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    font-size: 32px;
+    color: #f4f4f2;
+    opacity: 0.35;
+    margin-bottom: 8px;
+}
+
+.inicio .paso-titulo {
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    font-size: 18px;
+    color: #f4f4f2;
+    margin-bottom: 8px;
+}
+
+.inicio .paso-texto {
+    color: #9a9aa1;
+    font-size: 15px;
+    line-height: 1.55;
+    margin-bottom: 0;
+}
+
+/* Sección acción final */
+
+.inicio .final {
+    padding: 96px 0;
+    background-color: #0b0b0d;
+}
+
+.inicio .caja-final {
+    background-color: #17171a;
+    border: 1px solid rgba(244, 244, 242, 0.1);
+    border-radius: 12px;
+    padding: 48px;
+}
+
+.inicio .titulo-final {
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    font-size: 30px;
+    color: #f4f4f2;
+    margin-bottom: 10px;
+}
+
+.inicio .texto-final {
+    color: #9a9aa1;
+    margin-bottom: 0;
+}
+
+@media (max-width: 991px) {
+    .inicio .caja-final {
+        text-align: center;
+        padding: 36px;
+    }
+}
