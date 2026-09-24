@@ -1,0 +1,40 @@
+<main>
+
+    <form class="formulario-oscuro" [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
+
+        <p class="titulo-formulario">Inicia sesión<span class="titulo-punto">.</span></p>
+
+        <div class="alerta-error" *ngIf="errorGeneral()">{{ errorGeneral() }}</div>
+
+        <div class="row g-3">
+            <div class="col-12">
+                <label for="documento">Número de documento</label>
+                <input type="text" class="form-control" id="documento" formControlName="documento" inputmode="numeric"
+                    autocomplete="username" placeholder="Ej. 1053812345"
+                    [class.is-invalid]="campoInvalido('documento')">
+                <div class="invalid-feedback" *ngIf="tieneError('documento', 'required')">
+                    El documento es obligatorio
+                </div>
+                <div class="invalid-feedback" *ngIf="tieneError('documento', 'pattern')">
+                    El documento solo debe tener números
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label for="contrasena">Contraseña</label>
+                <input type="password" class="form-control" id="contrasena" formControlName="password"
+                    autocomplete="current-password" placeholder="Tu contraseña"
+                    [class.is-invalid]="campoInvalido('password')">
+                <div class="invalid-feedback" *ngIf="campoInvalido('password')">
+                    La contraseña es obligatoria
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="boton boton-acento boton-grande w-100" [disabled]="enviando()">
+            {{ enviando() ? 'Ingresando...' : 'Iniciar sesión' }}
+        </button>
+
+    </form>
+
+</main>

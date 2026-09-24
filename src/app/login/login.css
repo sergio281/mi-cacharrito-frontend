@@ -1,0 +1,148 @@
+main {
+    padding: 32px 16px;
+    background-color: #0b0b0d;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.titulo-punto {
+    color: #e63946;
+}
+
+.formulario-oscuro {
+
+    width: 460px;
+    max-width: 100%;
+
+
+    min-height: 380px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    background-color: #17171a;
+    border: 1px solid rgba(244, 244, 242, 0.08);
+    border-radius: 12px;
+    padding: 28px 32px;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4);
+}
+
+.titulo-formulario {
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #f4f4f2;
+    border-bottom: 1px solid rgba(244, 244, 242, 0.08);
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+}
+
+.alerta-error {
+    background-color: rgba(230, 57, 70, 0.1);
+    border: 1px solid rgba(230, 57, 70, 0.35);
+    color: #f4f4f2;
+    padding: 8px 12px;
+    border-radius: 7px;
+    font-size: 12px;
+    margin-bottom: 16px;
+}
+
+.formulario-oscuro .row.g-3 {
+    margin-top: 0;
+    row-gap: 14px !important;
+}
+
+.formulario-oscuro .row.g-3>* {
+    margin-top: 0;
+}
+
+.formulario-oscuro label {
+    font-size: 11px;
+    font-weight: 500;
+    color: #9a9aa1;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.formulario-oscuro .form-control {
+    background-color: #1f1f23;
+    border: 1px solid rgba(244, 244, 242, 0.1);
+    color: #f4f4f2;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 13px;
+    height: 36px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formulario-oscuro .form-control::placeholder {
+    color: #57575c;
+}
+
+.formulario-oscuro .form-control:hover {
+    border-color: rgba(244, 244, 242, 0.2);
+}
+
+.formulario-oscuro .form-control:focus {
+    background-color: #1f1f23;
+    color: #f4f4f2;
+    border-color: #e63946;
+    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.18);
+}
+
+.formulario-oscuro .form-control.is-invalid {
+    border-color: #e63946;
+    background-image: none;
+}
+
+.formulario-oscuro .invalid-feedback {
+    color: #e63946;
+    font-size: 10px;
+    margin-top: 3px;
+}
+
+.boton {
+    font-weight: 600;
+    border-radius: 7px;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.boton-acento {
+    background-color: #e63946;
+    color: #ffffff;
+}
+
+.boton-acento:hover {
+    background-color: #cf2e3a;
+    color: #ffffff;
+}
+
+.boton-acento:active {
+    transform: scale(0.99);
+}
+
+.boton-acento:disabled {
+    background-color: #4a1f23;
+    color: #9a9aa1;
+    cursor: not-allowed;
+}
+
+.boton-grande {
+    padding: 10px 24px;
+    font-size: 13.5px;
+    margin-top: 12px;
+}
+
+@media (max-width: 768px) {
+    .formulario-oscuro {
+        padding: 20px 16px;
+    }
+}
