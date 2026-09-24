@@ -1,0 +1,140 @@
+<main>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+
+                <form class="formulario-oscuro" [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
+
+                    <p class="titulo-formulario">Crea tu cuenta<span class="titulo-punto">.</span></p>
+
+                    <div class="alerta-error" *ngIf="errorGeneral()">{{ errorGeneral() }}</div>
+
+                    <div class="seccion-formulario">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label for="documento">Número de documento</label>
+                                <input type="text" class="form-control" id="documento" formControlName="documento"
+                                    inputmode="numeric" placeholder="Ej. 1053812345"
+                                    [class.is-invalid]="campoInvalido('documento')">
+                                <div class="invalid-feedback" *ngIf="tieneError('documento', 'required')">El
+                                    documento es obligatorio</div>
+                                <div class="invalid-feedback" *ngIf="tieneError('documento', 'pattern')">El
+                                    documento solo debe tener números</div>
+                                <div class="invalid-feedback" *ngIf="tieneError('documento', 'repetido')">Este
+                                    documento ya está registrado</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="nombres">Nombres</label>
+                                <input type="text" class="form-control" id="nombres" formControlName="nombres"
+                                    placeholder="Ej. Laura Alejandra" [class.is-invalid]="campoInvalido('nombres')">
+                                <div class="invalid-feedback" *ngIf="campoInvalido('nombres')">Los nombres son
+                                    obligatorios</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="apellidos">Apellidos</label>
+                                <input type="text" class="form-control" id="apellidos" formControlName="apellidos"
+                                    placeholder="Ej. Gómez Restrepo" [class.is-invalid]="campoInvalido('apellidos')">
+                                <div class="invalid-feedback" *ngIf="campoInvalido('apellidos')">Los apellidos son
+                                    obligatorios</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="correo">Correo electrónico</label>
+                                <input type="email" class="form-control" id="correo" formControlName="correo"
+                                    placeholder="tucorreo@ejemplo.com" [class.is-invalid]="campoInvalido('correo')">
+                                <div class="invalid-feedback" *ngIf="tieneError('correo', 'required')">El correo es
+                                    obligatorio</div>
+                                <div class="invalid-feedback" *ngIf="tieneError('correo', 'email')">Ingresa un
+                                    correo válido</div>
+                                <div class="invalid-feedback" *ngIf="tieneError('correo', 'repetido')">Este correo
+                                    ya está registrado</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="telefono">Número de teléfono</label>
+                                <input type="tel" class="form-control" id="telefono" formControlName="telefono"
+                                    autocomplete="tel" placeholder="Ej. 300 123 4567"
+                                    [class.is-invalid]="campoInvalido('telefono')">
+                                <div class="invalid-feedback" *ngIf="campoInvalido('telefono')">El teléfono es
+                                    obligatorio</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fila-dos-columnas">
+                        <div class="seccion-formulario">
+                            <p class="subtitulo-formulario">Licencia de conducción</p>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label for="fechaExpedicionLicencia">Fecha de expedición</label>
+                                    <input type="date" class="form-control" id="fechaExpedicionLicencia"
+                                        formControlName="fechaExpedicionLicencia">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="fechaVencimientoLicencia">Vigencia (vencimiento)</label>
+                                    <input type="date" class="form-control" id="fechaVencimientoLicencia"
+                                        formControlName="fechaVencimientoLicencia"
+                                        [class.is-invalid]="fechasInvalidas()">
+                                    <div class="invalid-feedback" *ngIf="fechasInvalidas()">Debe ser posterior a la
+                                        fecha de expedición</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="categoriaLicencia">Categoría</label>
+                                    <select class="form-select" id="categoriaLicencia"
+                                        formControlName="categoriaLicencia">
+                                        <option value="" disabled selected>Selecciona una categoría</option>
+                                        <option>A1</option>
+                                        <option>A2</option>
+                                        <option>B1</option>
+                                        <option>B2</option>
+                                        <option>B3</option>
+                                        <option>C1</option>
+                                        <option>C2</option>
+                                        <option>C3</option>
+                                    </select>
+                                    <p class="texto-ayuda">Debe cubrir el tipo de vehículo</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="seccion-formulario">
+                            <p class="subtitulo-formulario">Acceso</p>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="password">Contraseña</label>
+                                    <input type="password" class="form-control" id="password" formControlName="password"
+                                        placeholder="Mínimo 6 caracteres" autocomplete="new-password"
+                                        [class.is-invalid]="campoInvalido('password')">
+                                    <div class="invalid-feedback" *ngIf="campoInvalido('password')">Mínimo 6
+                                        caracteres</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="boton boton-acento boton-grande w-100" [disabled]="enviando()">
+                        {{ enviando() ? 'Creando cuenta...' : 'Crear cuenta' }}
+                    </button>
+                </form>
+
+                <p class="texto-auth-pie">
+                    ¿Ya tienes una cuenta? <a routerLink="/login">Inicia sesión</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup de registro exitoso -->
+    <div class="fondo-popup" *ngIf="registroExitoso()">
+        <div class="popup-exito">
+            <div class="popup-icono">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none"
+                    stroke="#2ecc71" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <h2 class="popup-titulo">Registro exitoso</h2>
+            <p class="popup-texto">Tu cuenta fue creada correctamente. Ya puedes iniciar sesión.</p>
+            <a routerLink="/login" class="boton boton-acento boton-grande w-100">Iniciar sesión</a>
+        </div>
+    </div>
+</main>
