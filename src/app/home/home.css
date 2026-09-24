@@ -172,11 +172,23 @@
     background-color: #17171a;
     border: 1px solid rgba(244, 244, 242, 0.1);
     border-radius: 10px;
-    padding: 32px;
+    overflow: hidden;
 }
 
 .inicio .caja-vehiculo:hover {
     border-color: #e63946;
+}
+
+.inicio .caja-imagen {
+    display: block;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.inicio .caja-contenido {
+    padding: 24px 32px 32px;
 }
 
 .inicio .caja-numero {
@@ -205,6 +217,24 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 32px;
+}
+
+.inicio .caja-cta .caja-titulo {
+    font-size: 26px;
+    margin-bottom: 12px;
+}
+
+.inicio .caja-cta .caja-texto {
+    max-width: 280px;
+    margin-bottom: 24px;
+}
+
+.inicio .caja-cta .boton {
+    padding: 12px 32px;
+    font-size: 16px;
 }
 
 /* Sección cómo funciona */
