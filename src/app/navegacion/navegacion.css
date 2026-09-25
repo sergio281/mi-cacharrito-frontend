@@ -43,3 +43,42 @@
         text-align: center;
     }
 }
+
+.chip-usuario {
+    background-color: #17171a;
+    color: #f4f4f2;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.chip-usuario:hover,
+.chip-usuario:focus {
+    background-color: #17171a;
+    color: #f4f4f2;
+}
+
+.menu-usuario-nav {
+    border: 1px solid rgba(23, 23, 26, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 12px 28px rgba(23, 23, 26, 0.12);
+    padding: 6px;
+    margin-top: 10px;
+    min-width: 170px;
+}
+
+.menu-usuario-nav .dropdown-item {
+    color: #17171a;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 6px;
+}
+
+.menu-usuario-nav .dropdown-item:hover,
+.menu-usuario-nav .dropdown-item:focus {
+    background-color: rgba(230, 57, 70, 0.1);
+    color: #e63946;
+}
