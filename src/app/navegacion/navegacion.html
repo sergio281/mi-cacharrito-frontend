@@ -31,10 +31,23 @@
                 </li>
             </ul>
 
-            <!-- Botones de acción (sin el cuadrito rojo) -->
-            <div class="d-flex gap-2">
-                <a href="/login" class="btn btn-outline-dark">Iniciar sesión</a>
-            </div>
+            <ng-container *ngIf="servicioUsuario.sesion$ | async as usuario; else botonLogin">
+                <div class="dropdown">
+                    <button class="chip-usuario dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        {{ usuario.nombres }} {{ usuario.apellidos }}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end menu-usuario-nav">
+                        <li><button class="dropdown-item" type="button" (click)="cerrarSesion()">Cerrar sesión</button>
+                        </li>
+                    </ul>
+                </div>
+            </ng-container>
+
+            <ng-template #botonLogin>
+                <div class="d-flex gap-2">
+                    <a routerLink="/login" class="btn btn-outline-dark">Iniciar sesión</a>
+                </div>
+            </ng-template>
 
         </div>
     </div>

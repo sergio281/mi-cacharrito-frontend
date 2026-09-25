@@ -261,3 +261,13 @@ main {
     color: #9a9aa1;
     margin-bottom: 16px;
 }
+
+.chip-usuario {
+    background-color: #17171a;
+    color: #f4f4f2;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-weight: 600;
+    font-size: 14px;
+}
