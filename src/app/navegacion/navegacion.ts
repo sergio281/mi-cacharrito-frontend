@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
-import { UsuarioService } from '../servicio/usuario';
+import { AuthService } from '../servicio/auth-service';
 
 @Component({
   selector: 'app-navegacion',
@@ -12,10 +12,10 @@ import { UsuarioService } from '../servicio/usuario';
 })
 export class Navegacion {
 
-  constructor(public servicioUsuario: UsuarioService, private router: Router) { }
+constructor(public authService: AuthService, private router: Router) { }
 
   cerrarSesion(): void {
-    this.servicioUsuario.cerrarSesion();
+    this.authService.cerrarSesion();
     this.router.navigate(['/']);
   }
 }

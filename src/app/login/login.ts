@@ -2,8 +2,9 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UsuarioService } from '../servicio/usuario';
+import { AuthService } from '../servicio/auth-service';
 import { Usuario } from '../entidades/usuario';
+import { Admin } from '../entidades/admin';
 
 @Component({
   selector: 'app-login',
@@ -18,21 +19,15 @@ export class Login {
   enviando = signal(false);
   errorGeneral = signal('');
 
-  constructor(private fb: FormBuilder, private servicioUsuario: UsuarioService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService, // <-- Inyectamos el servicio de autenticación
+    private router: Router
+  ) {
     this.formulario = this.fb.group({
-      documento: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      documento: ['', [Validators.required]],
       password: ['', Validators.required]
     });
-  }
-
-  campoInvalido(nombre: string): boolean {
-    const campo = this.formulario.get(nombre);
-    return !!campo && campo.invalid && (campo.touched || campo.dirty);
-  }
-
-  tieneError(nombre: string, tipo: string): boolean {
-    const campo = this.formulario.get(nombre);
-    return !!campo && campo.hasError(tipo) && (campo.touched || campo.dirty);
   }
 
   enviar(): void {
@@ -45,20 +40,46 @@ export class Login {
 
     this.enviando.set(true);
 
-    const usuario = new Usuario();
-    usuario.documento = this.formulario.value.documento;
-    usuario.password = this.formulario.value.password;
+    const credenciales = {
+      documento: this.formulario.value.documento,
+      password: this.formulario.value.password
+    };
 
-    this.servicioUsuario.iniciarSesion(usuario).subscribe({
-      next: (usuarioEncontrado) => {
+    this.authService.autenticar(credenciales).subscribe({
+      next: (respuesta) => {
         this.enviando.set(false);
-        this.servicioUsuario.guardarSesion(usuarioEncontrado);
-        this.router.navigate(['/usuario']);
+
+        if (respuesta && respuesta.rol === 'ADMIN') {
+          this.procesarInicioAdmin(respuesta as Admin);
+        } else {
+          this.procesarInicioUsuario(respuesta as Usuario);
+        }
       },
       error: (mensaje: string) => {
         this.enviando.set(false);
         this.errorGeneral.set(mensaje);
       }
     });
+  }
+
+  private procesarInicioAdmin(admin: Admin): void {
+    this.authService.guardarSesion(admin);
+    this.router.navigate(['/admin']);
+  }
+
+  private procesarInicioUsuario(usuario: Usuario): void {
+    this.authService.guardarSesion(usuario);
+    this.router.navigate(['/usuario']);
+  }
+
+
+  campoInvalido(nombre: string): boolean {
+    const campo = this.formulario.get(nombre);
+    return !!campo && campo.invalid && (campo.touched || campo.dirty);
+  }
+
+  tieneError(nombre: string, tipo: string): boolean {
+    const campo = this.formulario.get(nombre);
+    return !!campo && campo.hasError(tipo) && (campo.touched || campo.dirty);
   }
 }
