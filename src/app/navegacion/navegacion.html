@@ -21,7 +21,7 @@
                     <a class="nav-link" href="#inicio">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#vehiculos">Vehículos</a>
+                    <a class="nav-link" href="/vehiculos">Vehículos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#como-funciona">Cómo funciona</a>
@@ -31,13 +31,22 @@
                 </li>
             </ul>
 
-            <ng-container *ngIf="servicioUsuario.sesion$ | async as usuario; else botonLogin">
+            <ng-container *ngIf="authService.sesion$ | async as cuenta; else botonLogin">
                 <div class="dropdown">
                     <button class="chip-usuario dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        {{ usuario.nombres }} {{ usuario.apellidos }}
+                        <!-- Casteo a Admin usando $any() -->
+                        <ng-container *ngIf="cuenta.rol === 'ADMIN'">
+                            {{ $any(cuenta).username }}
+                        </ng-container>
+
+                        <!-- Casteo a Usuario usando $any() -->
+                        <ng-container *ngIf="cuenta.rol === 'USUARIO'">
+                            {{ $any(cuenta).nombres }} {{ $any(cuenta).apellidos }}
+                        </ng-container>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end menu-usuario-nav">
-                        <li><button class="dropdown-item" type="button" (click)="cerrarSesion()">Cerrar sesión</button>
+                        <li>
+                            <button class="dropdown-item" type="button" (click)="cerrarSesion()">Cerrar sesión</button>
                         </li>
                     </ul>
                 </div>

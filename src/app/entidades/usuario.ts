@@ -9,4 +9,5 @@ export class Usuario {
   fechaExpedicionLicencia: string = '';
   fechaVencimientoLicencia: string = '';
   categoriaLicencia: string = '';
+  rol: string = 'USUARIO';
 }

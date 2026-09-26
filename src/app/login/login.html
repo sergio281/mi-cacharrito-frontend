@@ -1,5 +1,4 @@
 <main>
-
     <form class="formulario-oscuro" [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
 
         <p class="titulo-formulario">Inicia sesión<span class="titulo-punto">.</span></p>
@@ -8,15 +7,12 @@
 
         <div class="row g-3">
             <div class="col-12">
-                <label for="documento">Número de documento</label>
-                <input type="text" class="form-control" id="documento" formControlName="documento" inputmode="numeric"
-                    autocomplete="username" placeholder="Ej. 1053812345"
-                    [class.is-invalid]="campoInvalido('documento')">
+                <label for="documento">Documento / Usuario</label>
+                <input type="text" class="form-control" id="documento" formControlName="documento"
+                    autocomplete="username" placeholder="Ej. 1053812345 o admin" 
+                    [class.is-invalid]="tieneError('documento', 'required')">
                 <div class="invalid-feedback" *ngIf="tieneError('documento', 'required')">
-                    El documento es obligatorio
-                </div>
-                <div class="invalid-feedback" *ngIf="tieneError('documento', 'pattern')">
-                    El documento solo debe tener números
+                    El usuario o documento es obligatorio
                 </div>
             </div>
 
@@ -36,5 +32,4 @@
         </button>
 
     </form>
-
 </main>
