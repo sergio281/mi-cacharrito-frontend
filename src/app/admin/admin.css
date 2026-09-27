@@ -1,0 +1,252 @@
+/* --- ESTILOS GENERALES Y TEMA OSCURO --- */
+:host {
+  display: block;
+  background-color: #0d0f12;
+  color: #ffffff;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.franja-superior-panel {
+  background-color: #12151a;
+  border-bottom: 1px solid #1e232d;
+  padding: 2rem 0;
+}
+
+.etiqueta-panel {
+  color: #ff3b30;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.titulo-panel {
+  color: #ffffff;
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.pagina-panel-admin {
+  background-color: #0d0f12;
+}
+
+/* --- PESTAÑAS (TABS) --- */
+.pestanas-panel {
+  display: flex;
+  gap: 1.5rem;
+  border-bottom: 1px solid #1e232d;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+}
+
+.pestana-panel {
+  background: transparent;
+  border: none;
+  color: #8e8e93;
+  padding: 0.75rem 0.25rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.pestana-panel:hover {
+  color: #ffffff;
+}
+
+.pestana-panel.activa {
+  color: #ffffff;
+  border-bottom-color: #ff3b30;
+  font-weight: 600;
+}
+
+/* --- SUBTÍTULOS Y FILTROS --- */
+.subtitulo-seccion-panel {
+  color: #8e8e93;
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.fila-tipos-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip-tipo {
+  background-color: #1c1f26;
+  color: #ffffff;
+  border: 1px solid #2c303b;
+  border-radius: 20px;
+  padding: 0.4rem 1.2rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chip-tipo:hover {
+  background-color: #2c303b;
+}
+
+.chip-tipo.activo {
+  background-color: #ff3b30;
+  border-color: #ff3b30;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* --- TARJETAS Y TABLAS --- */
+.tarjeta-app {
+  background-color: #14171d;
+  border: 1px solid #1e232d;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.tabla-oscura {
+  width: 100%;
+  color: #e1e1e6;
+  border-collapse: collapse;
+}
+
+.tabla-oscura th {
+  color: #8e8e93;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid #1e232d;
+}
+
+.tabla-oscura td {
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid #1a1d24;
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.tabla-oscura tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* --- INSIGNIAS Y ESTADOS --- */
+.insignia-estado {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.insignia-pendiente {
+  background-color: rgba(217, 119, 6, 0.2);
+  color: #f59e0b;
+  border: 1px solid rgba(217, 119, 6, 0.3);
+}
+
+.insignia-disponible {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.insignia-entregado {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* --- FORMULARIOS Y BÚSQUEDAS --- */
+.titulo-tarjeta-accion {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: #ffffff;
+}
+
+.texto-tarjeta-accion {
+  color: #8e8e93;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+}
+
+.fila-buscador {
+  display: flex;
+  gap: 0.75rem;
+  max-width: 500px;
+}
+
+.form-control {
+  background-color: #0d0f12 !important;
+  border: 1px solid #2c303b !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  padding: 0.6rem 1rem !important;
+}
+
+.form-control:focus {
+  border-color: #ff3b30 !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 59, 48, 0.25) !important;
+}
+
+.form-control::placeholder {
+  color: #484e5c;
+}
+
+/* --- BOTONES --- */
+.boton {
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.boton-acento {
+  background-color: #ff3b30;
+  color: #ffffff;
+}
+
+.boton-acento:hover {
+  background-color: #e03126;
+}
+
+/* --- RESULTADOS Y FRANJAS --- */
+.resultado-busqueda {
+  background-color: #1c1f26;
+  border: 1px solid #2c303b;
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.etiqueta-campo-contrato {
+  color: #8e8e93;
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
+}
+
+.valor-campo-contrato {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+.valor-total-contrato {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ff3b30;
+  margin: 0;
+}
+
+.texto-ayuda {
+  color: #ef4444;
+  font-size: 0.875rem;
+}
