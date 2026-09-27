@@ -1,72 +1,74 @@
-<main class="inicio">
+<main class="inicio bg-light">
 
-    <!-- SECCIÓN HÉROE  -->
-    <section class="hero" id="inicio">
-        <div class="container">
+    <!-- SECCIÓN HÉROE -->
+    <section class="hero py-5 bg-white border-bottom" id="inicio">
+        <div class="container py-4">
             <div class="row align-items-center g-5">
 
                 <div class="col-lg-7">
-                    <p class="subtitulo">Alquiler de vehículos en Manizales</p>
-                    <h1 class="titulo1">
+                    <span class="badge bg-danger text-uppercase px-3 py-2 mb-3 fw-semibold">Alquiler de vehículos en Manizales</span>
+                    <h1 class="display-4 fw-bold text-dark mb-3">
                         Reserva tu vehículo en minutos, sin filas ni papeleo
                     </h1>
-                    <p class="parrafo1">
+                    <p class="lead text-muted mb-4">
                         Automóviles, camionetas, camperos, microbuses y motocicletas
                         verificados, listos para el día y la hora que necesites.
                     </p>
-                    <div class="botones d-flex flex-wrap gap-3">
-                        <a href="#vehiculos" class="boton boton-rojo boton-grande">Ver vehículos disponibles</a>
-                        <a routerLink="/registro" class="boton boton-blanco boton-grande">Crear cuenta gratis</a>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#vehiculos" class="btn btn-danger btn-lg px-4 fw-semibold shadow-sm">Ver vehículos disponibles</a>
+                        <a routerLink="/registro" class="btn btn-outline-secondary btn-lg px-4 fw-semibold">Crear cuenta gratis</a>
                     </div>
                 </div>
 
                 <div class="col-lg-5">
-                    <div class="caja-busqueda">
-                        <p class="busqueda-titulo">¿Qué necesitas hoy?</p>
-                        <div class="d-grid gap-2">
-                            <a href="#vehiculos" class="opcion-vehiculo">
-                                <span>Automóvil</span>
-                                <span class="flecha">›</span>
-                            </a>
-                            <a href="#vehiculos" class="opcion-vehiculo">
-                                <span>Camioneta</span>
-                                <span class="flecha">›</span>
-                            </a>
-                            <a href="#vehiculos" class="opcion-vehiculo">
-                                <span>Campero</span>
-                                <span class="flecha">›</span>
-                            </a>
-                            <a href="#vehiculos" class="opcion-vehiculo">
-                                <span>Microbús</span>
-                                <span class="flecha">›</span>
-                            </a>
-                            <a href="#vehiculos" class="opcion-vehiculo">
-                                <span>Motocicleta</span>
-                                <span class="flecha">›</span>
-                            </a>
+                    <div class="card shadow border-0 rounded-4 p-3">
+                        <div class="card-body">
+                            <h2 class="h5 card-title fw-bold text-dark mb-3">¿Qué necesitas hoy?</h2>
+                            <div class="list-group list-group-flush gap-2">
+                                <a href="#vehiculos" class="list-group-item list-group-item-action border rounded-3 d-flex justify-content-between align-items-center fw-medium py-2 px-3">
+                                    <span>Automóvil</span>
+                                    <span class="fs-5 text-muted">›</span>
+                                </a>
+                                <a href="#vehiculos" class="list-group-item list-group-item-action border rounded-3 d-flex justify-content-between align-items-center fw-medium py-2 px-3">
+                                    <span>Camioneta</span>
+                                    <span class="fs-5 text-muted">›</span>
+                                </a>
+                                <a href="#vehiculos" class="list-group-item list-group-item-action border rounded-3 d-flex justify-content-between align-items-center fw-medium py-2 px-3">
+                                    <span>Campero</span>
+                                    <span class="fs-5 text-muted">›</span>
+                                </a>
+                                <a href="#vehiculos" class="list-group-item list-group-item-action border rounded-3 d-flex justify-content-between align-items-center fw-medium py-2 px-3">
+                                    <span>Microbús</span>
+                                    <span class="fs-5 text-muted">›</span>
+                                </a>
+                                <a href="#vehiculos" class="list-group-item list-group-item-action border rounded-3 d-flex justify-content-between align-items-center fw-medium py-2 px-3">
+                                    <span>Motocicleta</span>
+                                    <span class="fs-5 text-muted">›</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <!-- franja de confianza -->
-            <div class="numeros row row-cols-2 row-cols-sm-4 g-4">
-                <div class="col">
-                    <p class="numero">5</p>
-                    <p class="numero-texto">tipos de vehículo</p>
+            <!-- Franja de confianza -->
+            <div class="row row-cols-2 row-cols-sm-4 g-4 pt-5 mt-4 border-top">
+                <div class="col text-center text-sm-start">
+                    <p class="display-6 fw-bold text-danger mb-0">5</p>
+                    <p class="text-muted small mb-0">tipos de vehículo</p>
                 </div>
-                <div class="col">
-                    <p class="numero">24/7</p>
-                    <p class="numero-texto">solicitud de alquiler</p>
+                <div class="col text-center text-sm-start">
+                    <p class="display-6 fw-bold text-danger mb-0">24/7</p>
+                    <p class="text-muted small mb-0">solicitud de alquiler</p>
                 </div>
-                <div class="col">
-                    <p class="numero">100%</p>
-                    <p class="numero-texto">vehículos verificados</p>
+                <div class="col text-center text-sm-start">
+                    <p class="display-6 fw-bold text-danger mb-0">100%</p>
+                    <p class="text-muted small mb-0">vehículos verificados</p>
                 </div>
-                <div class="col">
-                    <p class="numero">PDF</p>
-                    <p class="numero-texto">contrato inmediato</p>
+                <div class="col text-center text-sm-start">
+                    <p class="display-6 fw-bold text-danger mb-0">PDF</p>
+                    <p class="text-muted small mb-0">contrato inmediato</p>
                 </div>
             </div>
 
@@ -74,142 +76,163 @@
     </section>
 
     <!-- TIPOS DE VEHÍCULO -->
-    <section class="tipos" id="vehiculos">
-        <div class="container">
-            <div class="encabezado row">
+    <section class="py-5" id="vehiculos">
+        <div class="container py-4">
+            <div class="row mb-4 align-items-end">
                 <div class="col-lg-6">
-                    <h2 class="titulo2">Una flota para cada plan</h2>
+                    <h2 class="h1 fw-bold text-dark mb-0">Una flota para cada plan</h2>
                 </div>
                 <div class="col-lg-5 offset-lg-1">
-                    <p class="parrafo2">
+                    <p class="text-muted mb-0">
                         Elige el tipo de vehículo, revisa la disponibilidad real y
                         confirma las fechas de inicio y entrega en el mismo formulario.
                     </p>
                 </div>
             </div>
 
-            <div class="row g-4 mt-2">
+            <div class="row g-4">
                 <div class="col-md-6 col-lg-4">
-                    <article class="caja-vehiculo">
-                        <img src="/images/automovil.jpg" alt="Automóvil" class="caja-imagen" decoding="async">
-                        <div class="caja-contenido">
-                            <p class="caja-numero">01</p>
-                            <h3 class="caja-titulo">Automóvil</h3>
-                            <p class="caja-texto">Ideal para trayectos urbanos y viajes cortos en familia.</p>
+                    <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
+                        <img src="/images/automovil.jpg" alt="Automóvil" class="card-img-top object-fit-cover" style="height: 200px;">
+                        <div class="card-body">
+                            <span class="text-danger fw-bold fs-5 d-block mb-1">01</span>
+                            <h3 class="h5 card-title fw-bold text-dark">Automóvil</h3>
+                            <p class="card-text text-muted">Ideal para trayectos urbanos y viajes cortos en familia.</p>
                         </div>
-                    </article>
+                    </div>
                 </div>
+
                 <div class="col-md-6 col-lg-4">
-                    <article class="caja-vehiculo">
-                        <img src="/images/camioneta.jpg" alt="Camioneta" class="caja-imagen" decoding="async">
-                        <div class="caja-contenido">
-                            <p class="caja-numero">02</p>
-                            <h3 class="caja-titulo">Camioneta</h3>
-                            <p class="caja-texto">Más espacio de carga para mudanzas, mercado o herramientas.</p>
+                    <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
+                        <img src="/images/camioneta.jpg" alt="Camioneta" class="card-img-top object-fit-cover" style="height: 200px;">
+                        <div class="card-body">
+                            <span class="text-danger fw-bold fs-5 d-block mb-1">02</span>
+                            <h3 class="h5 card-title fw-bold text-dark">Camioneta</h3>
+                            <p class="card-text text-muted">Más espacio de carga para mudanzas, mercado o herramientas.</p>
                         </div>
-                    </article>
+                    </div>
                 </div>
+
                 <div class="col-md-6 col-lg-4">
-                    <article class="caja-vehiculo">
-                        <img src="/images/campero.jpg" alt="Campero" class="caja-imagen" decoding="async">
-                        <div class="caja-contenido">
-                            <p class="caja-numero">03</p>
-                            <h3 class="caja-titulo">Campero</h3>
-                            <p class="caja-texto">Tracción y altura para carretera destapada y clima difícil.</p>
+                    <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
+                        <img src="/images/campero.jpg" alt="Campero" class="card-img-top object-fit-cover" style="height: 200px;">
+                        <div class="card-body">
+                            <span class="text-danger fw-bold fs-5 d-block mb-1">03</span>
+                            <h3 class="h5 card-title fw-bold text-dark">Campero</h3>
+                            <p class="card-text text-muted">Tracción y altura para carretera destapada y clima difícil.</p>
                         </div>
-                    </article>
+                    </div>
                 </div>
+
                 <div class="col-md-6 col-lg-4">
-                    <article class="caja-vehiculo">
-                        <img src="/images/microbus.webp" alt="Microbús" class="caja-imagen" decoding="async">
-                        <div class="caja-contenido">
-                            <p class="caja-numero">04</p>
-                            <h3 class="caja-titulo">Microbús</h3>
-                            <p class="caja-texto">Para grupos grandes, excursiones o transporte de equipos.</p>
+                    <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
+                        <img src="/images/microbus.webp" alt="Microbús" class="card-img-top object-fit-cover" style="height: 200px;">
+                        <div class="card-body">
+                            <span class="text-danger fw-bold fs-5 d-block mb-1">04</span>
+                            <h3 class="h5 card-title fw-bold text-dark">Microbús</h3>
+                            <p class="card-text text-muted">Para grupos grandes, excursiones o transporte de equipos.</p>
                         </div>
-                    </article>
+                    </div>
                 </div>
+
                 <div class="col-md-6 col-lg-4">
-                    <article class="caja-vehiculo">
-                        <img src="/images/motocicleta.jpg" alt="Motocicleta" class="caja-imagen" decoding="async">
-                        <div class="caja-contenido">
-                            <p class="caja-numero">05</p>
-                            <h3 class="caja-titulo">Motocicleta</h3>
-                            <p class="caja-texto">Agilidad para moverte rápido en la ciudad, a menor costo.</p>
+                    <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
+                        <img src="/images/motocicleta.jpg" alt="Motocicleta" class="card-img-top object-fit-cover" style="height: 200px;">
+                        <div class="card-body">
+                            <span class="text-danger fw-bold fs-5 d-block mb-1">05</span>
+                            <h3 class="h5 card-title fw-bold text-dark">Motocicleta</h3>
+                            <p class="card-text text-muted">Agilidad para moverte rápido en la ciudad, a menor costo.</p>
                         </div>
-                    </article>
+                    </div>
                 </div>
+
                 <div class="col-md-6 col-lg-4">
-                    <article class="caja-vehiculo caja-cta">
-                        <h3 class="caja-titulo">¿Ya sabes cuál quieres?</h3>
-                        <p class="caja-texto">Regístrate para revisar el listado completo de disponibles.</p>
-                        <a routerLink="/registro" class="boton boton-rojo">Crear cuenta</a>
-                    </article>
+                    <div class="card h-100 shadow-sm border-0 rounded-3 bg-dark text-white p-4 d-flex flex-column justify-content-center">
+                        <h3 class="h4 card-title fw-bold mb-2">¿Ya sabes cuál quieres?</h3>
+                        <p class="card-text text-white-50 mb-4">Regístrate para revisar el listado completo de disponibles.</p>
+                        <div>
+                            <a routerLink="/registro" class="btn btn-danger fw-semibold px-4">Crear cuenta</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CÓMO FUNCIONA -->
-    <section class="proceso" id="como-funciona">
-        <div class="container">
-            <h2 class="titulo2 titulo2-centro">Cómo funciona tu alquiler</h2>
+    <section class="py-5 bg-white border-top border-bottom" id="como-funciona">
+        <div class="container py-4">
+            <h2 class="h1 fw-bold text-center text-dark mb-5">Cómo funciona tu alquiler</h2>
 
-            <div class="lista-pasos row g-4 mt-3">
+            <div class="row g-4">
                 <div class="col-md-3">
-                    <div class="paso">
-                        <p class="paso-numero">1</p>
-                        <h3 class="paso-titulo">Regístrate</h3>
-                        <p class="paso-texto">
-                            Ingresa tu identificación, datos de licencia y contacto para crear tu cuenta.
-                        </p>
+                    <div class="card border-0 h-100">
+                        <div class="card-body text-center text-md-start">
+                            <div class="badge bg-danger-subtle text-danger fs-4 rounded-circle mb-3 px-3 py-2 fw-bold">1</div>
+                            <h3 class="h5 card-title fw-bold text-dark">Regístrate</h3>
+                            <p class="card-text text-muted small">
+                                Ingresa tu identificación, datos de licencia y contacto para crear tu cuenta.
+                            </p>
+                        </div>
                     </div>
                 </div>
+
                 <div class="col-md-3">
-                    <div class="paso">
-                        <p class="paso-numero">2</p>
-                        <h3 class="paso-titulo">Elige el vehículo</h3>
-                        <p class="paso-texto">
-                            Filtra por tipo y revisa el listado de vehículos disponibles en tiempo real.
-                        </p>
+                    <div class="card border-0 h-100">
+                        <div class="card-body text-center text-md-start">
+                            <div class="badge bg-danger-subtle text-danger fs-4 rounded-circle mb-3 px-3 py-2 fw-bold">2</div>
+                            <h3 class="h5 card-title fw-bold text-dark">Elige el vehículo</h3>
+                            <p class="card-text text-muted small">
+                                Filtra por tipo y revisa el listado de vehículos disponibles en tiempo real.
+                            </p>
+                        </div>
                     </div>
                 </div>
+
                 <div class="col-md-3">
-                    <div class="paso">
-                        <p class="paso-numero">3</p>
-                        <h3 class="paso-titulo">Confirma las fechas</h3>
-                        <p class="paso-texto">
-                            Indica fecha de inicio y de entrega; el sistema genera tu contrato en PDF.
-                        </p>
+                    <div class="card border-0 h-100">
+                        <div class="card-body text-center text-md-start">
+                            <div class="badge bg-danger-subtle text-danger fs-4 rounded-circle mb-3 px-3 py-2 fw-bold">3</div>
+                            <h3 class="h5 card-title fw-bold text-dark">Confirma las fechas</h3>
+                            <p class="card-text text-muted small">
+                                Indica fecha de inicio y de entrega; el sistema genera tu contrato en PDF.
+                            </p>
+                        </div>
                     </div>
                 </div>
+
                 <div class="col-md-3">
-                    <div class="paso">
-                        <p class="paso-numero">4</p>
-                        <h3 class="paso-titulo">Recoge tu vehículo</h3>
-                        <p class="paso-texto">
-                            El administrador entrega el vehículo y actualiza el estado de tu alquiler.
-                        </p>
+                    <div class="card border-0 h-100">
+                        <div class="card-body text-center text-md-start">
+                            <div class="badge bg-danger-subtle text-danger fs-4 rounded-circle mb-3 px-3 py-2 fw-bold">4</div>
+                            <h3 class="h5 card-title fw-bold text-dark">Recoge tu vehículo</h3>
+                            <p class="card-text text-muted small">
+                                El administrador entrega el vehículo y actualiza el estado de tu alquiler.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- solicita tu alquiler -->
-    <section class="final" id="contacto">
-        <div class="container">
-            <div class="caja-final row align-items-center g-4">
-                <div class="col-lg-8">
-                    <h2 class="titulo-final">¿Listo para reservar tu próximo vehículo?</h2>
-                    <p class="texto-final">
-                        Crea tu cuenta gratis y solicita tu alquiler en menos de cinco minutos.
-                    </p>
-                </div>
-                <div class="col-lg-4 text-lg-end">
-                    <a routerLink="/registro" class="boton boton-rojo boton-grande">Crear cuenta</a>
+    <!-- SOLICITA TU ALQUILER -->
+    <section class="py-5" id="contacto">
+        <div class="container py-2">
+            <div class="bg-danger text-white rounded-4 p-4 p-md-5 shadow-lg">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg-8">
+                        <h2 class="h1 fw-bold mb-2">¿Listo para reservar tu próximo vehículo?</h2>
+                        <p class="lead mb-0 text-white-50">
+                            Crea tu cuenta gratis y solicita tu alquiler en menos de cinco minutos.
+                        </p>
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <a routerLink="/registro" class="btn btn-light btn-lg px-4 text-danger fw-bold shadow-sm">Crear cuenta</a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
 </main>

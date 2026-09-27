@@ -7,5 +7,6 @@ export class Vehiculo {
     Modelo:string;
     Color:string;
     Estado:string;
+    PrecioDia:number;
     tipoVehiculo:TipoVehiculo;
 }

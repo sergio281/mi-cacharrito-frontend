@@ -1,5 +1,5 @@
 export class TipoVehiculo {
-    Id_Tipo_Vehiculo:number;
-    Tipo_Vehiculo:string;
-    Descripcion:string;
+    id_Tipo_Vehiculo:number;
+    tipo_Vehiculo:string;
+    descripcion:string;
 }
