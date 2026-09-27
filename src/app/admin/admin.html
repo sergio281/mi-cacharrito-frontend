@@ -1,9 +1,129 @@
-<p>admin works!</p>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
+
+<header class="franja-superior-panel">
+  <div class="container">
+    <p class="etiqueta-panel">Panel de administrador</p>
+    <h1 class="titulo-panel">Gestiona alquileres, disponibilidad y entregas</h1>
+  </div>
+</header>
+
+<main class="pagina-panel-admin">
+  <div class="container py-5">
+    <div class="fila-tipos-selector mb-4">
+      <button class="chip-tipo" [class.activo]="pestanaActiva === 'seccion1'" (click)="activarPestana('seccion1')">Buscar por cliente</button>
+      <button class="chip-tipo" [class.activo]="pestanaActiva === 'seccion2'" (click)="activarPestana('seccion2')">Disponibles por tipo</button>
+      <button class="chip-tipo" [class.activo]="pestanaActiva === 'seccion3'" (click)="activarPestana('seccion3')">Marcar entrega</button>
+    </div>
+
+    @if (pestanaActiva === 'seccion1') {
+      <div class="tarjeta-app">
+        <p class="titulo-tarjeta-accion">Buscar alquileres por ID de cliente</p>
+        <p class="texto-tarjeta-accion">Ingresa el ID del cliente para ver sus alquileres registrados.</p>
+        <div class="formulario-oscuro fila-buscador">
+          <input type="text" class="form-control" id="idCliente1" name="idClienteBuscar1" placeholder="Ingrese el ID" [(ngModel)]="clienteIdBuscar">
+          <button type="button" (click)="buscarAlquileres()" class="boton boton-acento">Buscar</button>
+        </div>
+
+        @if (alquileres.length > 0) {
+          <div class="table-responsive mt-4">
+            <table class="tabla-oscura">
+              <thead>
+                <tr>
+                  <th>ID alquiler</th>
+                  <th>Placa</th>
+                  <th>Marca</th>
+                  <th>Modelo</th>
+                  <th>Fecha inicio</th>
+                  <th>Fecha entrega esperada</th>
+                  <th>Valor alquiler</th>
+                  <th>Estado</th>
+                  <th>Fecha entrega</th>
+                  <th>Valor días extra</th>
+                  <th>Valor total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let a of alquileres">
+                  <td>{{a.idAlquiler}}</td>
+                  <td>{{a.vehiculo?.Placa}}</td>
+                  <td>{{a.vehiculo?.Marca}}</td>
+                  <td>{{a.vehiculo?.Modelo}}</td>
+                  <td>{{a.fechaInicio}}</td>
+                  <td>{{a.fechaEntregaEsperada}}</td>
+                  <td>{{formatoDinero(a.valorAlquiler)}}</td>
+                  <td><span class="insignia-estado insignia-pendiente">{{a.estado}}</span></td>
+                  <td>{{a.fechaEntrega ? formatoFecha(a.fechaEntrega) : '-'}}</td>
+                  <td>{{a.valorDiasExtra ? formatoDinero(a.valorDiasExtra) : '-'}}</td>
+                  <td>{{a.valorTotal ? formatoDinero(a.valorTotal) : '-'}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        }
+        @if (alquileres.length === 0 && clienteIdBuscar) {
+          <p class="texto-ayuda mt-3">No se encontraron alquileres para ese ID.</p>
+        }
+      </div>
+    }
+
+    @if (pestanaActiva === 'seccion2') {
+      <div class="tarjeta-app">
+        <p class="subtitulo-seccion-panel mb-3">Filtra por tipo de vehículo</p>
+        <div class="fila-tipos-selector mb-4">
+          @for (tipo of tipos; track tipo.Id_Tipo_Vehiculo) {
+            <button class="chip-tipo" [class.activo]="tipoActivo?.Id_Tipo_Vehiculo === tipo.Id_Tipo_Vehiculo" (click)="filtrarPorTipo(tipo)">{{ tipo.Tipo_Vehiculo }}</button>
+          }
+        </div>
+        <div class="table-responsive">
+          <table class="tabla-oscura">
+            <thead>
+              <tr><th>Placa</th><th>Marca</th><th>Modelo</th><th>Color</th><th>Estado</th></tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let v of disponibles">
+                <td>{{v.Placa}}</td>
+                <td>{{v.Marca}}</td>
+                <td>{{v.Modelo}}</td>
+                <td>{{v.Color}}</td>
+                <td><span class="insignia-estado insignia-disponible">{{v.Estado}}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+
+    @if (pestanaActiva === 'seccion3') {
+      <div class="tarjeta-app">
+        <p class="titulo-tarjeta-accion">Marcar entrega por placa</p>
+        <p class="texto-tarjeta-accion">Cuando el usuario reclama el vehículo, busca por la placa y cambia el estado a "Entregado".</p>
+        <div class="formulario-oscuro fila-buscador">
+          <input type="text" class="form-control" [(ngModel)]="placaBuscar" name="placaBuscar" placeholder="Ej. WQR-134">
+          <button type="button" (click)="buscarPorPlaca()" class="boton boton-acento">Buscar</button>
+        </div>
+
+        @if (resultadoPlaca && !entregaConfirmada) {
+          <div class="resultado-busqueda mt-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+              <div>
+                <p class="etiqueta-campo-contrato">N.° alquiler <span>{{resultadoPlaca.idAlquiler}}</span> · Placa <span>{{resultadoPlaca.vehiculo?.Placa}}</span></p>
+                <p class="valor-campo-contrato">Vehículo <span>{{resultadoPlaca.vehiculo?.Marca}} {{resultadoPlaca.vehiculo?.Modelo}}</span></p>
+              </div>
+              <button type="button" (click)="marcarEntregado()" class="boton boton-acento">Marcar como entregado</button>
+            </div>
+          </div>
+        }
+
+        @if (entregaConfirmada) {
+          <div class="resultado-busqueda mt-4">
+            <p class="valor-campo-contrato">✔ El vehículo quedó marcado como <span class="insignia-estado insignia-entregado">Entregado</span></p>
+          </div>
+        }
+
+        @if (sinResultadoPlaca) {
+          <p class="texto-ayuda mt-3">No se encontró ningún alquiler pendiente con esa placa.</p>
+        }
+      </div>
+    }
+  </div>
+</main>
