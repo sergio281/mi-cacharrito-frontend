@@ -1,8 +1,4 @@
 
-/* ==========================================================
-   Mi Cacharrito — estilos base compartidos por toda la app
-   ========================================================== */
-
 :root {
   --negro: #0b0b0d;
   --negro-suave: #17171a;
@@ -413,6 +409,3 @@ a { text-decoration: none; }
 @media (max-width: 991px) {
   .enlaces-app { display: none !important; }
 }
-
-@import 'bootstrap/dist/css/bootstrap.min.css';
-

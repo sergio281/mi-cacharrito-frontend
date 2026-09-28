@@ -1,86 +1,43 @@
-
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { AdminService } from '../servicio/admin-service';
-import { FormsModule } from '@angular/forms';
-
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { AdminService } from '../servicio/admin-service';
 import { Vehiculo } from '../entidades/vehiculo';
 import { Alquileres } from '../entidades/alquileres';
 import { TipoVehiculo } from '../entidades/tipo-vehiculo';
 
-
 @Component({
-  imports: [CommonModule, FormsModule],
   selector: 'app-admin',
   standalone: true,
-  styleUrl: './admin.css',
+  imports: [CommonModule, FormsModule],
   templateUrl: './admin.html',
+  styleUrl: './admin.css'
 })
+export class AdminComponent implements OnInit {
+  // Navegación de pestañas
+  pestanaActiva: string = 'disponibles';
 
-export class AdminComponent {
-  pestanaActiva: string = 'seccion1';
+  // Gestión de tipos y vehículos disponibles
+  tiposVehiculo: TipoVehiculo[] = [];
+  tipoSeleccionadoId: number = 1;
+  disponibles: Vehiculo[] = [];
+
+  // Alquileres pendientes y búsquedas por cliente
+  pendientes: Alquileres[] = [];
   clienteIdBuscar: string = '';
-  alquileres: any[] = [];
+  alquileres: Alquileres[] = [];
 
-  constructor(
-    private adminService: AdminService,
-    private cdr: ChangeDetectorRef
-  ) { }
-
-  tipos: any[] = [];
-  tipoActivo: any = null;
-  disponibles: any[] = [];
+  // Búsqueda por placa y entrega
+  inputPlaca: string = '';
   placaBuscar: string = '';
+  alquilerPlacaEncontrado: Alquileres | null = null;
   resultadoPlaca: any = null;
+  busquedaPlacaRealizada: boolean = false;
   entregaConfirmada: boolean = false;
   sinResultadoPlaca: boolean = false;
 
-  ngOnInit(): void {
-    this.adminService.listarTipos().subscribe({
-      next: (dato) => {
-        this.tipos = dato;
-        if (this.tipos.length > 0) {
-          this.filtrarPorTipo(this.tipos[0]);
-        }
-        this.cdr.detectChanges();
-      },
-      error: (error) => {
-        console.error('Error al listar tipos:', error);
-      }
-    });
-  }
-
-  filtrarPorTipo(tipo: any): void {
-    this.tipoActivo = tipo;
-    this.adminService.buscarDisponiblesPorTipo(tipo.Id_Tipo_Vehiculo).subscribe({
-      next: (dato) => {
-        this.disponibles = dato;
-        this.cdr.detectChanges();
-      },
-      error: (error) => {
-        console.error('Error al filtrar vehículos:', error);
-        this.disponibles = [];
-      }
-
-export class AdminComponent implements OnInit {
-  pestanaActiva: string = 'disponibles';
-
-  // Lista de tipos traídos de la BD y ID seleccionado actualmente
-  tiposVehiculo: TipoVehiculo[] = [];
-  tipoSeleccionadoId: number = 1;
-
-  pendientes: Alquileres[] = [];
-  disponibles: Vehiculo[] = [];
-
-  inputPlaca: string = '';
-  alquilerPlacaEncontrado: Alquileres | null = null;
-  busquedaPlacaRealizada: boolean = false;
-  entregaConfirmada: boolean = false;
-
+  // Búsqueda por número de alquiler y devolución/liberación
   inputAlquilerId: number | null = null;
   alquilerEncontrado: Alquileres | null = null;
   busquedaAlquilerRealizada: boolean = false;
@@ -91,34 +48,46 @@ export class AdminComponent implements OnInit {
 
   readonly VALOR_RECARGO_DIA = 60000;
 
-  constructor(private adminService: AdminService) {}
+  constructor(
+    private adminService: AdminService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.cargarPendientes();
     this.cargarTiposVehiculo();
   }
 
+  // --- NAVEGACIÓN Y PESTAÑAS ---
   cambiarPestana(pestana: string): void {
     this.pestanaActiva = pestana;
   }
 
+  activarPestana(nombre: string): void {
+    this.pestanaActiva = nombre;
+  }
+
+  // --- CARGA DE DATOS INICIALES ---
   cargarTiposVehiculo(): void {
     this.adminService.getTiposVehiculo().subscribe({
-      next: (tipos) => {
+      next: (tipos: TipoVehiculo[]) => {
         this.tiposVehiculo = tipos;
-        if (tipos.length > 0) {
-          // Selecciona el primer tipo de vehículo por defecto usando su ID
+        if (tipos && tipos.length > 0) {
           this.seleccionarTipo(tipos[0].id_Tipo_Vehiculo);
         }
+        this.cdr.detectChanges();
       },
-      error: (err) => console.error('Error al cargar tipos de vehículo:', err)
+      error: (err: any) => console.error('Error al cargar tipos de vehículo:', err)
     });
   }
 
   cargarPendientes(): void {
     this.adminService.getPendientes().subscribe({
-      next: (data) => (this.pendientes = data),
-      error: (err) => console.error('Error al cargar pendientes:', err)
+      next: (data: Alquileres[]) => {
+        this.pendientes = data;
+        this.cdr.detectChanges();
+      },
+      error: (err: any) => console.error('Error al cargar pendientes:', err)
     });
   }
 
@@ -129,85 +98,66 @@ export class AdminComponent implements OnInit {
 
   cargarDisponibles(tipoId: number): void {
     this.adminService.getDisponiblesPorTipo(tipoId).subscribe({
-      next: (data) => (this.disponibles = data),
-      error: (err) => console.error('Error al cargar disponibles:', err)
-
-    });
-  }
-
-  buscarPorPlaca(): void {
-
-    this.entregaConfirmada = false;
-    this.sinResultadoPlaca = false;
-    this.adminService.buscarPorPlaca(this.placaBuscar).subscribe({
-      next: (dato) => {
-        if (dato) {
-          this.resultadoPlaca = dato;
-        } else {
-          this.resultadoPlaca = null;
-          this.sinResultadoPlaca = true;
-        }
+      next: (data: Vehiculo[]) => {
+        this.disponibles = data;
         this.cdr.detectChanges();
       },
-      error: (error) => {
-        console.error('Error al buscar por placa:', error);
-        this.resultadoPlaca = null;
-        this.sinResultadoPlaca = true;
-      }
-
-    if (!this.inputPlaca.trim()) return;
-    this.busquedaPlacaRealizada = true;
-    this.entregaConfirmada = false;
-
-    this.adminService.buscarPorPlaca(this.inputPlaca.trim().toUpperCase()).subscribe({
-      next: (data) => (this.alquilerPlacaEncontrado = data),
-      error: () => (this.alquilerPlacaEncontrado = null)
-
-    });
-  }
-
-  marcarEntregado(): void {
-
-    this.adminService.marcarEntregado(this.resultadoPlaca.idAlquiler).subscribe({
-      next: () => {
-        this.entregaConfirmada = true;
-        this.cdr.detectChanges();
-      },
-      error: (error) => {
-        console.error('Error al marcar entregado:', error);
+      error: (err: any) => {
+        console.error('Error al cargar disponibles:', err);
+        this.disponibles = [];
       }
     });
   }
 
-  activarPestana(nombre: string): void {
-    this.pestanaActiva = nombre;
-  }
-
+  // --- BÚSQUEDAS ---
   buscarAlquileres(): void {
+    if (!this.clienteIdBuscar) return;
+
     this.adminService.buscarAlquileresPorId(this.clienteIdBuscar).subscribe({
-      next: (dato) => {
+      next: (dato: Alquileres[]) => {
         this.alquileres = dato;
         this.cdr.detectChanges();
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error al buscar los alquileres:', error);
-        alert("No se encontraron alquileres para ese id.");
+        alert('No se encontraron alquileres para ese ID.');
         this.alquileres = [];
       }
     });
   }
 
-    if (!this.alquilerPlacaEncontrado) return;
-    this.adminService.marcarComoEntregado(this.alquilerPlacaEncontrado.idAlquiler).subscribe({
-      next: () => {
-        this.entregaConfirmada = true;
-        this.cargarPendientes();
+  buscarPorPlaca(): void {
+    const placa = this.inputPlaca.trim() || this.placaBuscar.trim();
+    if (!placa) return;
+
+    this.busquedaPlacaRealizada = true;
+    this.entregaConfirmada = false;
+    this.sinResultadoPlaca = false;
+
+    this.adminService.buscarPorPlaca(placa.toUpperCase()).subscribe({
+      next: (data: Alquileres) => {
+        if (data) {
+          this.alquilerPlacaEncontrado = data;
+          this.resultadoPlaca = data;
+        } else {
+          this.alquilerPlacaEncontrado = null;
+          this.resultadoPlaca = null;
+          this.sinResultadoPlaca = true;
+        }
+        this.cdr.detectChanges();
+      },
+      error: (error: any) => {
+        console.error('Error al buscar por placa:', error);
+        this.alquilerPlacaEncontrado = null;
+        this.resultadoPlaca = null;
+        this.sinResultadoPlaca = true;
       }
     });
   }
 
   buscarPorAlquiler(): void {
     if (!this.inputAlquilerId) return;
+
     this.busquedaAlquilerRealizada = true;
     this.liberacionConfirmada = false;
     this.fechaRealEntrega = '';
@@ -215,8 +165,26 @@ export class AdminComponent implements OnInit {
     this.recargoTotal = 0;
 
     this.adminService.buscarPorNumero(this.inputAlquilerId).subscribe({
-      next: (data) => (this.alquilerEncontrado = data),
+      next: (data: Alquileres) => {
+        this.alquilerEncontrado = data;
+        this.cdr.detectChanges();
+      },
       error: () => (this.alquilerEncontrado = null)
+    });
+  }
+
+  // --- ACCIONES Y OPERACIONES ---
+  marcarEntregado(): void {
+    const id = this.alquilerPlacaEncontrado?.idAlquiler || this.resultadoPlaca?.idAlquiler;
+    if (!id) return;
+
+    this.adminService.marcarComoEntregado(id).subscribe({
+      next: () => {
+        this.entregaConfirmada = true;
+        this.cargarPendientes();
+        this.cdr.detectChanges();
+      },
+      error: (error: any) => console.error('Error al marcar como entregado:', error)
     });
   }
 
@@ -246,20 +214,23 @@ export class AdminComponent implements OnInit {
         if (this.tipoSeleccionadoId !== null) {
           this.cargarDisponibles(this.tipoSeleccionadoId);
         }
-      }
+        this.cdr.detectChanges();
+      },
+      error: (err: any) => console.error('Error al marcar disponible:', err)
     });
   }
 
-
-
+  // --- FORMATOS Y UTILIDADES ---
   formatoFecha(iso: string): string {
-    return new Date(iso + "T00:00:00").toLocaleDateString("es-CO", { day: "2-digit", month: "short", year: "numeric" });
+    if (!iso) return '';
+    return new Date(iso + 'T00:00:00').toLocaleDateString('es-CO', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
   }
 
   formatoDinero(n: number): string {
-    return "$" + n.toLocaleString("es-CO");
+    return '$' + (n || 0).toLocaleString('es-CO');
   }
-
-  
-
 }
