@@ -10,67 +10,18 @@ import { TipoVehiculo } from '../entidades/tipo-vehiculo';
 })
 export class AdminService {
 
-  private apiUrl = 'http://localhost:8080/Admin';
-  private buscarAlquileresPorIdUrl = 'http://localhost:8080/Alquileres/a/buscarAlquileres/';
-  private listarTiposUrl = 'http://localhost:8080/Vehiculos/v/listarTipos/';
-  private buscarDisponiblesUrl = 'http://localhost:8080/Vehiculos/v/buscarDisponibles/';
-  private buscarPorPlacaUrl = 'http://localhost:8080/Alquileres/a/buscarPorPlaca/';
-  private marcarEntregadoUrl = 'http://localhost:8080/Alquileres/a/marcarEntregado/';
+
+  private ListTodosUrl = 'http://localhost:8080/Alquileres/a/listarTodos/';
 
   constructor(private http: HttpClient) { }
 
   // --- Endpoints de la REST API (Ruta /Admin) ---
 
-  getTiposVehiculo(): Observable<TipoVehiculo[]> {
-    return this.http.get<TipoVehiculo[]>(`${this.apiUrl}/tipos-vehiculo`);
+
+  ListarTodos(): Observable<Alquileres[]> {
+    return this.http.get<Alquileres[]>(this.ListTodosUrl);
   }
 
-  getPendientes(): Observable<Alquileres[]> {
-    return this.http.get<Alquileres[]>(`${this.apiUrl}/alquileres/pendientes`);
-  }
 
-  getDisponiblesPorTipo(tipoId: number): Observable<Vehiculo[]> {
-    return this.http.get<Vehiculo[]>(`${this.apiUrl}/vehiculos/disponibles`, { params: { tipo: tipoId.toString() } });
-  }
 
-  buscarPorNumero(idAlquiler: number): Observable<Alquileres> {
-    return this.http.get<Alquileres>(`${this.apiUrl}/alquileres/${idAlquiler}`);
-  }
-
-  marcarComoEntregado(idAlquiler: number): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/alquileres/${idAlquiler}/entregar`, {});
-  }
-
-  marcarComoDisponible(idAlquiler: number, datosLiberacion: { fechaEntrega: Date; valorDiasExtra: number; valorTotal: number }): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/alquileres/${idAlquiler}/liberar`, datosLiberacion);
-  }
-
-  // --- Métodos de endpoints alternativos o Legacy ---
-
-  buscarPorPlaca(placa: string): Observable<Alquileres> {
-    return this.http.get<Alquileres>(`${this.apiUrl}/alquileres/buscar-placa/${placa}`);
-  }
-
-  buscarAlquileresPorId(id: string | number): Observable<any> {
-    return this.http.get<any>(this.buscarAlquileresPorIdUrl, {
-      params: { id: id.toString() }
-    });
-  }
-
-  listarTipos(): Observable<any> {
-    return this.http.get<any>(this.listarTiposUrl);
-  }
-
-  buscarDisponiblesPorTipo(id: number): Observable<any> {
-    return this.http.get<any>(this.buscarDisponiblesUrl, {
-      params: { id: id.toString() }
-    });
-  }
-
-  marcarEntregado(id: number): Observable<string> {
-    return this.http.get(this.marcarEntregadoUrl, {
-      params: { id: id.toString() },
-      responseType: 'text'
-    });
-  }
 }

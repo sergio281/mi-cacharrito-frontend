@@ -2,7 +2,7 @@
     <div class="container-fluid contenedor-barra">
 
         <!-- Logo -->
-        <a class="navbar-brand marca" href="#inicio">
+        <a class="navbar-brand marca" routerLink="/">
             Mi Cacharrito<span class="marca-punto">.</span>
         </a>
 
@@ -18,40 +18,51 @@
             <!-- Enlaces centrados -->
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#inicio">Inicio</a>
+                    <a class="nav-link" routerLink="/">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/vehiculos">Vehículos</a>
+                    <a class="nav-link" routerLink="/" fragment="vehiculos">Vehículos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#como-funciona">Cómo funciona</a>
+                    <a class="nav-link" routerLink="/" fragment="como-funciona">Cómo funciona</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#contacto">Contacto</a>
+                    <a class="nav-link" routerLink="/" fragment="contacto">Contacto</a>
                 </li>
             </ul>
 
+            <!-- Sección de usuario autenticado -->
             <ng-container *ngIf="authService.sesion$ | async as cuenta; else botonLogin">
                 <div class="dropdown">
                     <button class="chip-usuario dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        <!-- Casteo a Admin usando $any() -->
                         <ng-container *ngIf="cuenta.rol === 'ADMIN'">
                             {{ $any(cuenta).username }}
                         </ng-container>
 
-                        <!-- Casteo a Usuario usando $any() -->
                         <ng-container *ngIf="cuenta.rol === 'USUARIO'">
                             {{ $any(cuenta).nombres }} {{ $any(cuenta).apellidos }}
                         </ng-container>
                     </button>
+                    
                     <ul class="dropdown-menu dropdown-menu-end menu-usuario-nav">
+                        <!-- Enlace dinámico según el Rol -->
+                        <li *ngIf="cuenta.rol === 'ADMIN'">
+                            <a class="dropdown-item" routerLink="/admin">Panel de Administración</a>
+                        </li>
+                        <li *ngIf="cuenta.rol === 'USUARIO'">
+                            <a class="dropdown-item" routerLink="/usuario">Mi Panel</a>
+                        </li>
+                        
+                        <li><hr class="dropdown-divider"></li>
+
                         <li>
-                            <button class="dropdown-item" type="button" (click)="cerrarSesion()">Cerrar sesión</button>
+                            <button class="dropdown-item text-danger" type="button" (click)="cerrarSesion()">Cerrar sesión</button>
                         </li>
                     </ul>
                 </div>
             </ng-container>
 
+            <!-- Botón si no está logueado -->
             <ng-template #botonLogin>
                 <div class="d-flex gap-2">
                     <a routerLink="/login" class="btn btn-outline-dark">Iniciar sesión</a>

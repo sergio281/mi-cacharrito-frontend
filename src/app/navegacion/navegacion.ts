@@ -14,6 +14,7 @@ export class Navegacion {
 
 constructor(public authService: AuthService, private router: Router) { }
 
+  
   cerrarSesion(): void {
     this.authService.cerrarSesion();
     this.router.navigate(['/']);
