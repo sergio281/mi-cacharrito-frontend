@@ -10,37 +10,18 @@ import { TipoVehiculo } from '../entidades/tipo-vehiculo';
 })
 export class AdminService {
 
-  private apiUrl = 'http://localhost:8080/Admin';
 
-  constructor(private http: HttpClient) {}
+  private ListTodosUrl = 'http://localhost:8080/Alquileres/a/listarTodos/';
 
-  // Obtener la lista de tipos de vehículo registrados en BD
-  getTiposVehiculo(): Observable<TipoVehiculo[]> {
-    return this.http.get<TipoVehiculo[]>(`${this.apiUrl}/tipos-vehiculo`);
+  constructor(private http: HttpClient) { }
+
+  // --- Endpoints de la REST API (Ruta /Admin) ---
+
+
+  ListarTodos(): Observable<Alquileres[]> {
+    return this.http.get<Alquileres[]>(this.ListTodosUrl);
   }
 
-  getPendientes(): Observable<Alquileres[]> {
-    return this.http.get<Alquileres[]>(`${this.apiUrl}/alquileres/pendientes`);
-  }
 
-  // Pasa el ID numérico del tipo
-  getDisponiblesPorTipo(tipoId: number): Observable<Vehiculo[]> {
-    return this.http.get<Vehiculo[]>(`${this.apiUrl}/vehiculos/disponibles`, { params: { tipo: tipoId } });
-  }
 
-  buscarPorPlaca(placa: string): Observable<Alquileres> {
-    return this.http.get<Alquileres>(`${this.apiUrl}/alquileres/buscar-placa/${placa}`);
-  }
-
-  marcarComoEntregado(idAlquiler: number): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/alquileres/${idAlquiler}/entregar`, {});
-  }
-
-  buscarPorNumero(idAlquiler: number): Observable<Alquileres> {
-    return this.http.get<Alquileres>(`${this.apiUrl}/alquileres/${idAlquiler}`);
-  }
-
-  marcarComoDisponible(idAlquiler: number, datosLiberacion: { fechaEntrega: Date; valorDiasExtra: number; valorTotal: number }): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/alquileres/${idAlquiler}/liberar`, datosLiberacion);
-  }
 }

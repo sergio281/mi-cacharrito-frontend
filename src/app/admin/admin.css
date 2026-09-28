@@ -1,3 +1,48 @@
+
+.pagina-panel-admin { background-color: var(--negro); min-height: 60vh; }
+
+.pestanas-panel-scroll { overflow-x: auto; flex-wrap: nowrap; }
+
+.subtitulo-seccion-panel { font-size: 13px; font-weight: 700; color: var(--gris); margin-bottom: 14px; }
+
+.fila-tipos-selector { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip-tipo {
+  background-color: var(--negro-medio);
+  border: 1px solid var(--borde);
+  color: var(--blanco);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 9px 18px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+.chip-tipo:hover { border-color: var(--gris); }
+.chip-tipo.activo { background-color: var(--rojo); border-color: var(--rojo); color: #fff; }
+
+.titulo-tarjeta-accion { font-size: 20px; font-weight: 600; color: var(--blanco); margin-bottom: 8px; }
+.texto-tarjeta-accion { color: var(--gris); font-size: 14px; line-height: 1.6; margin-bottom: 24px; max-width: 620px; }
+
+.fila-buscador { display: flex; gap: 10px; max-width: 420px; }
+.fila-buscador .form-control { flex: 1; }
+
+.resultado-busqueda {
+  background-color: var(--negro-medio);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.etiqueta-campo-contrato { font-size: 12px; color: var(--gris); font-weight: 600; margin-bottom: 4px; }
+.valor-campo-contrato { font-size: 16px; color: var(--blanco); margin-bottom: 0; }
+.valor-total-contrato { font-family: "Space Grotesk", "Inter", sans-serif; font-size: 24px; font-weight: 700; color: var(--rojo); margin-bottom: 0; }
+
+.franja-recargo {
+  background-color: rgba(230, 57, 70, 0.08);
+  border: 1px solid rgba(230, 57, 70, 0.3);
+  border-radius: 8px;
+  padding: 16px 20px;
+}
 /* --- ESTILOS GENERALES Y TEMA OSCURO --- */
 :host {
   display: block;
