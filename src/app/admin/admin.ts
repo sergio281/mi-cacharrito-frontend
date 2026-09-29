@@ -18,27 +18,38 @@ import { TipoVehiculo } from '../entidades/tipo-vehiculo';
   }
 })
 export class AdminComponent implements OnInit {
-
   pestanaActiva: string = 'disponibles';
+
   tiposVehiculo: TipoVehiculo[] = [];
   tipoSeleccionadoId: number | null = null;
   disponibles: Vehiculo[] = [];
-  todosAlquileres: Alquileres[] = [];
+
   pendientes: Alquileres[] = [];
+  todosAlquileres: Alquileres[] = [];
+
   inputPlaca: string = '';
   alquilerPlacaEncontrado: Alquileres | null = null;
   busquedaPlacaRealizada: boolean = false;
   entregaConfirmada: boolean = false;
 
+  inputAlquilerId: number | null = null;
+  alquilerEncontrado: Alquileres | null = null;
+  busquedaAlquilerRealizada: boolean = false;
+  fechaRealEntrega: string = '';
+  diasAdicionales: number = 0;
+  recargoTotal: number = 0;
+  liberacionConfirmada: boolean = false;
+
+  readonly VALOR_RECARGO_DIA = 60000;
 
   constructor(
     private adminService: AdminService,
     private cdr: ChangeDetectorRef,
-    private zone: NgZone
+    private zone: NgZone // Inyectamos NgZone
   ) { }
 
   ngOnInit(): void {
-
+    this.cargarTiposVehiculo();
   }
 
   cambiarPestana(pestana: string): void {
@@ -46,24 +57,46 @@ export class AdminComponent implements OnInit {
 
     if (pestana === 'todos') {
       this.cargarTodos();
-    }
-    else if (pestana === 'pendientes') {
+    } else if (pestana === 'pendientes') {
       this.cargarPendientes();
     } else if (pestana === 'disponibles' && this.tipoSeleccionadoId !== null) {
       this.cargarDisponibles(this.tipoSeleccionadoId);
     }
   }
 
-  cargarTodos(): void {
-    this.adminService.ListarTodos().subscribe({
-      next: (data: Alquileres[]) => {
+  cargarTiposVehiculo(): void {
+    this.adminService.getTiposVehiculo().subscribe({
+      next: (tipos: any[]) => {
         this.zone.run(() => {
-          this.todosAlquileres = [...data];
+          this.tiposVehiculo = tipos.map(t => ({
+            ...t,
+            id_Tipo_Vehiculo: t?.id_Tipo_Vehiculo ?? t?.Id_Tipo_Vehiculo ?? t?.id,
+            tipo_Vehiculo: t?.tipo_Vehiculo ?? t?.Tipo_Vehiculo ?? t?.nombre ?? 'Sin nombre'
+          }));
+
+          if (this.tiposVehiculo.length > 0) {
+            const primerTipoId = this.tiposVehiculo[0].id_Tipo_Vehiculo;
+            if (primerTipoId != null) {
+              this.tipoSeleccionadoId = primerTipoId;
+              if (this.pestanaActiva === 'disponibles') {
+                this.cargarDisponibles(primerTipoId);
+              }
+            }
+          }
           this.cdr.detectChanges();
         });
       },
-      error: (err) => console.error('Error al cargar todos:', err)
+      error: (err) => {
+        console.error('Error al cargar tipos:', err);
+        this.cdr.detectChanges();
+      }
     });
+  }
+
+  seleccionarTipo(tipoId: number): void {
+    if (tipoId == null) return;
+    this.tipoSeleccionadoId = tipoId;
+    this.cargarDisponibles(tipoId);
   }
 
   cargarDisponibles(tipoId: number): void {
@@ -97,6 +130,18 @@ export class AdminComponent implements OnInit {
         this.disponibles = [];
         this.cdr.detectChanges();
       }
+    });
+  }
+
+  cargarTodos(): void {
+    this.adminService.ListarTodos().subscribe({
+      next: (data: Alquileres[]) => {
+        this.zone.run(() => {
+          this.todosAlquileres = [...data];
+          this.cdr.detectChanges();
+        });
+      },
+      error: (err) => console.error('Error al cargar todos:', err)
     });
   }
 
@@ -158,5 +203,35 @@ export class AdminComponent implements OnInit {
       }
     });
   }
+
+
+  marcarEntregado(): void {
+    const id = this.alquilerPlacaEncontrado?.idAlquiler;
+    if (!id) return;
+
+    this.adminService.marcarComoEntregado(id).subscribe({
+      next: () => {
+        this.zone.run(() => {
+          this.entregaConfirmada = true;
+          this.alquilerPlacaEncontrado = null;
+          this.cargarPendientes();
+          this.cdr.detectChanges();
+        });
+      },
+      error: (error: any) => console.error('Error al marcar como entregado:', error)
+    });
+  }
+
+  calcularRecargo(): void {
+    if (!this.alquilerEncontrado || !this.fechaRealEntrega) return;
+
+    const pactada = new Date(this.alquilerEncontrado.fechaEntregaEsperada);
+    const real = new Date(this.fechaRealEntrega + 'T00:00:00');
+    const diferenciaMs = real.getTime() - pactada.getTime();
+
+    this.diasAdicionales = Math.max(0, Math.round(diferenciaMs / (1000 * 60 * 60 * 24)));
+    this.recargoTotal = this.diasAdicionales * this.VALOR_RECARGO_DIA;
+  }
+
 
 }
