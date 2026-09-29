@@ -30,6 +30,10 @@
         (click)="cambiarPestana('liberar')">
         Marcar disponible (por alquiler)
       </button>
+      <button type="button" class="pestana-panel" [class.activa]="pestanaActiva === 'nuevo-vehiculo'"
+        (click)="cambiarPestana('nuevo-vehiculo')">
+        Registrar Vehículo
+      </button>
     </nav>
 
 
@@ -306,6 +310,81 @@
         <p class="texto-ayuda mt-3">
           No se encontró ningún alquiler con ese número.
         </p>
+        }
+      </div>
+    </section>
+    }
+
+    <!-- Pestaña 5: REGISTRAR NUEVO VEHÍCULO -->
+    @if (pestanaActiva === 'nuevo-vehiculo') {
+    <section class="panel-contenido activo">
+      <div class="tarjeta-app">
+        <p class="titulo-tarjeta-accion">Registrar Nuevo Vehículo</p>
+        <p class="texto-tarjeta-accion">
+          Ingresa las especificaciones del vehículo para añadirlo al inventario de disponibles.
+        </p>
+
+        <form (ngSubmit)="registrarVehiculo()" class="formulario-oscuro row g-3 mt-2">
+          <div class="col-md-4">
+            <label class="etiqueta-campo-contrato d-block mb-1">Placa *</label>
+            <input type="text" class="form-control text-uppercase" [(ngModel)]="nuevoVehiculo.placa" name="placa"
+              placeholder="Ej. ABC-123" required>
+          </div>
+
+          <div class="col-md-4">
+            <label class="etiqueta-campo-contrato d-block mb-1">Marca *</label>
+            <input type="text" class="form-control" [(ngModel)]="nuevoVehiculo.marca" name="marca"
+              placeholder="Ej. Toyota" required>
+          </div>
+
+          <div class="col-md-4">
+            <label class="etiqueta-campo-contrato d-block mb-1">Modelo</label>
+            <input type="text" class="form-control" [(ngModel)]="nuevoVehiculo.modelo" name="modelo"
+              placeholder="Ej. Corolla / 2024">
+          </div>
+
+          <div class="col-md-4">
+            <label class="etiqueta-campo-contrato d-block mb-1">Color</label>
+            <input type="text" class="form-control" [(ngModel)]="nuevoVehiculo.color" name="color"
+              placeholder="Ej. Rojo">
+          </div>
+
+          <div class="col-md-4">
+            <label class="etiqueta-campo-contrato d-block mb-1">Precio por día (COP) *</label>
+            <input type="number" class="form-control" [(ngModel)]="nuevoVehiculo.precioDia" name="precioDia"
+              placeholder="Ej. 120000" required>
+          </div>
+
+          <div class="col-md-4">
+            <label class="etiqueta-campo-contrato d-block mb-1">Tipo de Vehículo *</label>
+            <select class="form-control" [(ngModel)]="nuevoVehiculo.idTipoVehiculo" name="idTipoVehiculo" required>
+              <option [ngValue]="null" disabled>Selecciona un tipo</option>
+              @for (tipo of tiposVehiculo; track tipo.id_Tipo_Vehiculo) {
+              <option [value]="tipo.id_Tipo_Vehiculo">{{ tipo.tipo_Vehiculo }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="col-12 mt-4">
+            <button type="submit" class="boton boton-acento">
+              Guardar Vehículo
+            </button>
+          </div>
+        </form>
+
+        @if (vehiculoRegistradoExito) {
+        <div class="resultado-busqueda mt-4">
+          <p class="valor-campo-contrato">
+            ✔ El vehículo fue registrado exitosamente y ya está marcado como <span
+              class="insignia-estado insignia-disponible">Disponible</span>.
+          </p>
+        </div>
+        }
+
+        @if (errorRegistroVehiculo) {
+        <div class="mt-3 text-danger">
+          {{ errorRegistroVehiculo }}
+        </div>
         }
       </div>
     </section>

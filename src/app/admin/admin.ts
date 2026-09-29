@@ -48,9 +48,22 @@ export class AdminComponent implements OnInit {
     private zone: NgZone // Inyectamos NgZone
   ) { }
 
+
   ngOnInit(): void {
     this.cargarTiposVehiculo();
   }
+
+  nuevoVehiculo = {
+    placa: '',
+    marca: '',
+    modelo: '',
+    color: '',
+    precioDia: null as number | null,
+    idTipoVehiculo: null as number | null
+  };
+
+  vehiculoRegistradoExito: boolean = false;
+  errorRegistroVehiculo: string = '';
 
   cambiarPestana(pestana: string): void {
     this.pestanaActiva = pestana;
@@ -256,39 +269,81 @@ export class AdminComponent implements OnInit {
   }
 
   marcarDisponible(): void {
-  if (!this.alquilerEncontrado) return;
+    if (!this.alquilerEncontrado) return;
 
-  const totalCalculado = (this.alquilerEncontrado.valorAlquiler || 0) + this.recargoTotal;
+    const totalCalculado = (this.alquilerEncontrado.valorAlquiler || 0) + this.recargoTotal;
 
-  const datosLiberacion = {
-    fechaEntrega: new Date(this.fechaRealEntrega),
-    valorDiasExtra: this.recargoTotal,
-    valorTotal: totalCalculado
-  };
+    const datosLiberacion = {
+      fechaEntrega: new Date(this.fechaRealEntrega),
+      valorDiasExtra: this.recargoTotal,
+      valorTotal: totalCalculado
+    };
 
-  this.adminService.marcarComoDisponible(this.alquilerEncontrado.idAlquiler, datosLiberacion).subscribe({
-    next: () => {
-      this.zone.run(() => {
-        this.liberacionConfirmada = true;
-        
-        // Actualizamos las listas locales para reflejar el nuevo total sin recargar toda la página
-        if (this.alquilerEncontrado) {
-          this.alquilerEncontrado.valorTotal = totalCalculado;
-          this.alquilerEncontrado.valorDiasExtra = this.recargoTotal;
-        }
+    this.adminService.marcarComoDisponible(this.alquilerEncontrado.idAlquiler, datosLiberacion).subscribe({
+      next: () => {
+        this.zone.run(() => {
+          this.liberacionConfirmada = true;
 
-        // Si la pestaña de disponibles está activa, refrescar disponibilidad
-        if (this.tipoSeleccionadoId !== null) {
-          this.cargarDisponibles(this.tipoSeleccionadoId);
-        }
+          // Actualizamos las listas locales para reflejar el nuevo total sin recargar toda la página
+          if (this.alquilerEncontrado) {
+            this.alquilerEncontrado.valorTotal = totalCalculado;
+            this.alquilerEncontrado.valorDiasExtra = this.recargoTotal;
+          }
 
-        // Recargar la lista de todos los alquileres para traer los datos actualizados de la BD
-        this.cargarTodos();
+          // Si la pestaña de disponibles está activa, refrescar disponibilidad
+          if (this.tipoSeleccionadoId !== null) {
+            this.cargarDisponibles(this.tipoSeleccionadoId);
+          }
 
+          // Recargar la lista de todos los alquileres para traer los datos actualizados de la BD
+          this.cargarTodos();
+
+          this.cdr.detectChanges();
+        });
+      },
+      error: (err: any) => console.error('Error al marcar disponible:', err)
+    });
+  }
+
+  registrarVehiculo(): void {
+    if (!this.nuevoVehiculo.placa || !this.nuevoVehiculo.marca || !this.nuevoVehiculo.idTipoVehiculo) {
+      this.errorRegistroVehiculo = 'Por favor completa los campos requeridos (Placa, Marca y Tipo).';
+      return;
+    }
+
+    this.errorRegistroVehiculo = '';
+    this.vehiculoRegistradoExito = false;
+
+    this.adminService.registrarVehiculo(this.nuevoVehiculo).subscribe({
+      next: () => {
+        this.zone.run(() => {
+          this.vehiculoRegistradoExito = true;
+
+          // Limpiar el formulario
+          this.nuevoVehiculo = {
+            placa: '',
+            marca: '',
+            modelo: '',
+            color: '',
+            precioDia: null,
+            idTipoVehiculo: this.tipoSeleccionadoId
+          };
+
+          // Si hay una categoría seleccionada en disponibles, recargar la lista
+          if (this.tipoSeleccionadoId !== null) {
+            this.cargarDisponibles(this.tipoSeleccionadoId);
+          }
+
+          this.cdr.detectChanges();
+        });
+      },
+      error: (err) => {
+        console.error('Error al registrar vehículo:', err);
+        this.errorRegistroVehiculo = 'Error al registrar el vehículo en la base de datos.';
         this.cdr.detectChanges();
-      });
-    },
-    error: (err: any) => console.error('Error al marcar disponible:', err)
-  });
-}
+      }
+    });
+  }
+
+
 }

@@ -1,0 +1,86 @@
+.pagina-panel-usuario {
+  background-color: var(--negro, #121212);
+  min-height: 60vh;
+}
+
+.etiqueta-usuario-activo {
+  font-size: 14px;
+  color: #17171a;
+  font-weight: 600;
+}
+
+.etiqueta-usuario-activo .text-muted {
+  font-weight: 400;
+  color: #6b6b70 !important;
+}
+
+.subtitulo-seccion-panel {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gris, #a0a0a0);
+  margin-bottom: 14px;
+}
+
+.fila-tipos-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip-tipo {
+  background-color: var(--negro-medio, #1e1e24);
+  border: 1px solid var(--borde, #333);
+  color: var(--blanco, #fff);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 9px 18px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.chip-tipo:hover {
+  border-color: var(--gris, #a0a0a0);
+}
+
+.chip-tipo.activo {
+  background-color: var(--rojo, #e50914);
+  border-color: var(--rojo, #e50914);
+  color: #fff;
+}
+
+.tarjeta-vehiculo-disponible {
+  height: 100%;
+}
+
+.etiqueta-placa {
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--gris, #a0a0a0);
+}
+
+.titulo-tarjeta-disponible {
+  font-size: 19px;
+  color: var(--blanco, #fff);
+  margin-bottom: 4px;
+}
+
+.texto-tarjeta-disponible {
+  color: var(--gris, #a0a0a0);
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.precio-tarjeta-disponible {
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--blanco, #fff);
+  margin-bottom: 16px;
+}
+
+.precio-tarjeta-disponible span {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--gris, #a0a0a0);
+}

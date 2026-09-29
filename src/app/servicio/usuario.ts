@@ -10,10 +10,10 @@ import { Admin } from '../entidades/admin';
 })
 export class UsuarioService {
 
-  private urlBase = 'http://localhost:8080/RegistrioUsuarios';
-  private urlLogin = 'http://localhost:8080/IniciarSesion';
+  private urlBase = 'http://localhost:8080/Usuario/RegistrioUsuarios';
+  private urlLogin = 'http://localhost:8080/Usuario/IniciarSesion';
+  private Usuariourl = 'http://localhost:8080/Usuario';
 
-  // Permite guardar un Usuario o un Admin en la sesión activa sin alterar sus clases
   sesion$ = new BehaviorSubject<Usuario | Admin | any | null>(this.leerSesionGuardada());
 
   constructor(private http: HttpClient) { }
@@ -24,14 +24,12 @@ export class UsuarioService {
     );
   }
 
-  // Realiza la autenticación enviando las credenciales ingresadas en el formulario
   iniciarSesion(credenciales: { documento: string; password: string }): Observable<any> {
     return this.http.post<any>(this.urlLogin, credenciales).pipe(
       catchError((error: HttpErrorResponse) => throwError(() => this.obtenerMensajeError(error)))
     );
   }
 
-  // Guardar la sesión independiente según corresponda
   guardarSesion(datosSesion: Usuario | Admin): void {
     if (typeof sessionStorage !== 'undefined') {
       sessionStorage.setItem('usuario', JSON.stringify(datosSesion));
@@ -81,4 +79,9 @@ export class UsuarioService {
     }
     return 'Ocurrió un error inesperado. Intenta de nuevo más tarde';
   }
+
+  guardarAlquiler(alquiler: any): Observable<any> {
+  return this.http.post<any>('http://localhost:8080/Usuario/RegistroUsuarios/alquileres', alquiler);
+}
+  
 }

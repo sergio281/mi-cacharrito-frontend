@@ -6,12 +6,11 @@ import { UsuarioComponent } from './usuario/usuario';
 import { AdminComponent } from './admin/admin';
 import { Vehiculocomponent } from './vehiculo/vehiculo';
 import { authGuard } from './servicio/auth-guard';
-import { guestGuard } from './servicio/guest-guard'; // <-- Importamos guestGuard
+import { guestGuard } from './servicio/guest-guard';
+import { ContratoComponent } from './contrato/contrato';
 
 export const routes: Routes = [
     { path: '', component: Home },
-    
-    // Rutas solo para usuarios NO logueados
     { path: 'registro', component: Registro, canActivate: [guestGuard] },
     { path: 'login', component: Login, canActivate: [guestGuard] },
 
@@ -20,6 +19,11 @@ export const routes: Routes = [
       path: 'usuario', 
       component: UsuarioComponent, 
       canActivate: [authGuard(['USUARIO', 'ADMIN'])] 
+    },
+    { 
+      path: 'contrato', 
+      component: ContratoComponent,
+      canActivate: [authGuard(['USUARIO', 'ADMIN'])] // 👈 Corregido el cierre de llave
     },
     { 
       path: 'admin', 
