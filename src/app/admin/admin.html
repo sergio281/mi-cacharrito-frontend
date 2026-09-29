@@ -14,6 +14,10 @@
         (click)="cambiarPestana('todos')">
         Todos los alquileres
       </button>
+      <button type="button" class="pestana-panel" [class.activa]="pestanaActiva === 'pendientes'"
+        (click)="cambiarPestana('pendientes')">
+        Pendientes de entrega
+      </button>
     </nav>
 
 
@@ -53,6 +57,51 @@
               @if (todosAlquileres.length === 0) {
               <tr>
                 <td colspan="9" class="text-center py-4 text-muted">No hay alquileres registrados en el sistema.</td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    }
+
+    <!-- Pestaña 1: PENDIENTES DE ENTREGA -->
+    @if (pestanaActiva === 'pendientes') {
+    <section class="panel-contenido activo">
+      <div class="tarjeta-app">
+        <div class="table-responsive">
+          <table class="tabla-oscura">
+            <thead>
+              <tr>
+                <th>N.° alquiler</th>
+                <th>Usuario</th>
+                <th>Identificación</th>
+                <th>Vehículo</th>
+                <th>Placa</th>
+                <th>Fecha inicio</th>
+                <th>Fecha entrega esperada</th>
+                <th>Valor</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (a of pendientes; track a.idAlquiler) {
+              <tr>
+                <td><strong>{{ a.idAlquiler }}</strong></td>
+                <td>{{ a.usuario?.nombres }} {{ a.usuario?.apellidos }}</td>
+                <td>{{ a.usuario?.documento || 'N/A' }}</td>
+                <td>{{ a.vehiculo?.tipoVehiculo?.tipo_Vehiculo || a.vehiculo?.Marca }}</td>
+                <td>{{ a.vehiculo?.Placa }}</td>
+                <td>{{ a.fechaInicio | date:'dd \'de\' MMM \'de\' yyyy' }}</td>
+                <td>{{ a.fechaEntregaEsperada | date:'dd \'de\' MMM \'de\' yyyy' }}</td>
+                <td><strong>{{ a.valorAlquiler | currency:'COP':'symbol':'1.0-0' }}</strong></td>
+                <td><span class="insignia-estado insignia-pendiente">{{ a.estado || 'Pendiente' }}</span></td>
+              </tr>
+              }
+              @if (pendientes.length === 0) {
+              <tr>
+                <td colspan="9" class="text-center py-4 text-muted">No hay alquileres pendientes de entrega.</td>
               </tr>
               }
             </tbody>
