@@ -22,6 +22,13 @@ export class AdminService {
   ListarTodos(): Observable<Alquileres[]> {
     return this.http.get<Alquileres[]>(this.ListTodosUrl);
   }
+  getTiposVehiculo(): Observable<TipoVehiculo[]> {
+    return this.http.get<TipoVehiculo[]>(`${this.apiUrl}/tipos-vehiculo`);
+  }
+
+  marcarComoEntregado(idAlquiler: number): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/alquileres/${idAlquiler}/entregar`, {});
+  }
 
   getDisponiblesPorTipo(tipoId: number): Observable<Vehiculo[]> {
     // Aseguramos que tipoId tenga un valor, si es undefined o null enviamos una cadena vacía o no hacemos la petición
