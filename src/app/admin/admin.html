@@ -22,12 +22,15 @@
         (click)="cambiarPestana('disponibles')">
         Disponibles por tipo
       </button>
-      <button type="button" class="pestana-panel" [class.activa]="pestanaActiva === 'entregar'" 
+      <button type="button" class="pestana-panel" [class.activa]="pestanaActiva === 'entregar'"
         (click)="cambiarPestana('entregar')">
         Marcar entrega (por placa)
       </button>
+      <button type="button" class="pestana-panel" [class.activa]="pestanaActiva === 'liberar'"
+        (click)="cambiarPestana('liberar')">
+        Marcar disponible (por alquiler)
+      </button>
     </nav>
-    
 
 
     <!-- Pestaña 0: TODOS LOS ALQUILERES -->
@@ -46,6 +49,7 @@
                 <th>Fecha inicio</th>
                 <th>Fecha entrega esperada</th>
                 <th>Valor</th>
+                <th>Valor Total</th>
                 <th>Estado</th>
               </tr>
             </thead>
@@ -59,7 +63,8 @@
                 <td>{{ a.vehiculo?.Placa }}</td>
                 <td>{{ a.fechaInicio | date:'dd \'de\' MMM \'de\' yyyy' }}</td>
                 <td>{{ a.fechaEntregaEsperada | date:'dd \'de\' MMM \'de\' yyyy' }}</td>
-                <td><strong>{{ a.valorAlquiler | currency:'COP':'symbol':'1.0-0' }}</strong></td>
+                <td><strong>{{ (a.valorAlquiler || a.valorAlquiler) | currency:'COP':'symbol':'1.0-0' }}</strong></td>
+                <td><strong>{{ a.valorTotal | currency:'COP':'symbol':'1.0-0' }}</strong></td>
                 <td><span class="insignia-estado insignia-pendiente">{{ a.estado || 'Pendiente' }}</span></td>
               </tr>
               }
@@ -74,6 +79,7 @@
       </div>
     </section>
     }
+
 
     <!-- Pestaña 1: PENDIENTES DE ENTREGA -->
     @if (pestanaActiva === 'pendientes') {
@@ -119,7 +125,9 @@
       </div>
     </section>
     }
-<!-- Pestaña 2: DISPONIBLES POR TIPO -->
+
+
+    <!-- Pestaña 2: DISPONIBLES POR TIPO -->
     @if (pestanaActiva === 'disponibles') {
     <section class="panel-contenido activo">
       <p class="subtitulo-seccion-panel mb-3">Filtra por tipo de vehículo</p>
@@ -157,7 +165,8 @@
               }
               @if (disponibles.length === 0) {
               <tr>
-                <td colspan="5" class="text-center py-4 text-muted">No hay vehículos disponibles para esta categoría.</td>
+                <td colspan="5" class="text-center py-4 text-muted">No hay vehículos disponibles para esta categoría.
+                </td>
               </tr>
               }
             </tbody>
@@ -178,8 +187,8 @@
         </p>
 
         <div class="formulario-oscuro fila-buscador">
-          <input type="text" class="form-control" [(ngModel)]="inputPlaca" name="inputPlaca"
-            placeholder="Ej. WQR-134" (keyup.enter)="buscarPorPlaca()">
+          <input type="text" class="form-control" [(ngModel)]="inputPlaca" name="inputPlaca" placeholder="Ej. WQR-134"
+            (keyup.enter)="buscarPorPlaca()">
 
           <button type="button" class="boton boton-acento" (click)="buscarPorPlaca()">
             Buscar
@@ -191,11 +200,13 @@
           <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
             <div>
               <p class="etiqueta-campo-contrato">
-                {{ alquilerPlacaEncontrado.idAlquiler }} · Usuario: {{ alquilerPlacaEncontrado.usuario?.nombres }} {{ alquilerPlacaEncontrado.usuario?.apellidos }}
+                {{ alquilerPlacaEncontrado.idAlquiler }} · Usuario: {{ alquilerPlacaEncontrado.usuario?.nombres }} {{
+                alquilerPlacaEncontrado.usuario?.apellidos }}
               </p>
               <p class="valor-campo-contrato">
                 Placa {{ alquilerPlacaEncontrado.vehiculo?.Placa }} —
-                {{ alquilerPlacaEncontrado.vehiculo?.tipoVehiculo?.tipo_Vehiculo || alquilerPlacaEncontrado.vehiculo?.Marca }}
+                {{ alquilerPlacaEncontrado.vehiculo?.tipoVehiculo?.tipo_Vehiculo ||
+                alquilerPlacaEncontrado.vehiculo?.Marca }}
               </p>
             </div>
             <button type="button" class="boton boton-acento" (click)="marcarEntregado()">
@@ -221,5 +232,84 @@
       </div>
     </section>
     }
+
+
+    <!-- Pestaña 4: LIBERAR VEHÍCULO -->
+    @if (pestanaActiva === 'liberar') {
+    <section class="panel-contenido activo">
+      <div class="tarjeta-app">
+        <p class="titulo-tarjeta-accion">Buscar por número de alquiler</p>
+        <p class="texto-tarjeta-accion">
+          Registra la fecha real de entrega. Si es posterior a la fecha pactada, el sistema calcula el cobro de los días
+          adicionales antes de dejar el vehículo disponible de nuevo.
+        </p>
+
+        <div class="formulario-oscuro fila-buscador">
+          <input type="number" class="form-control" [(ngModel)]="inputAlquilerId" name="inputAlquilerId"
+            placeholder="Ej. 1042" (keyup.enter)="buscarPorAlquiler()">
+          <button type="button" class="boton boton-acento" (click)="buscarPorAlquiler()">Buscar</button>
+        </div>
+
+        @if (alquilerEncontrado && !liberacionConfirmada) {
+        <div class="resultado-busqueda mt-4">
+          <div class="row g-3 formulario-oscuro align-items-end">
+            <div class="col-md-4">
+              <p class="etiqueta-campo-contrato">Vehículo</p>
+              <p class="valor-campo-contrato">
+                Id° {{ alquilerEncontrado.vehiculo?.Id_vehiculo }} - {{ alquilerEncontrado.vehiculo?.Marca }} — {{
+                alquilerEncontrado.vehiculo?.Placa }}
+              </p>
+            </div>
+            <div class="col-md-4">
+              <p class="etiqueta-campo-contrato">Fecha de entrega pactada</p>
+              <p class="valor-campo-contrato">
+                {{ alquilerEncontrado.fechaEntregaEsperada | date:'dd/MM/yyyy' }}
+              </p>
+            </div>
+            <div class="col-md-4">
+              <label for="fechaRealEntrega" class="etiqueta-campo-contrato d-block">Fecha real de entrega</label>
+              <input type="date" class="form-control" id="fechaRealEntrega" name="fechaRealEntrega"
+                [(ngModel)]="fechaRealEntrega" (change)="calcularRecargo()">
+            </div>
+          </div>
+
+          @if (fechaRealEntrega) {
+          <div class="franja-recargo mt-4">
+            <p class="etiqueta-campo-contrato mb-1">Días adicionales</p>
+            <p class="valor-campo-contrato mb-3">{{ diasAdicionales }} {{ diasAdicionales === 1 ? 'día' : 'días' }}</p>
+
+            <p class="etiqueta-campo-contrato mb-1">Recargo a cobrar</p>
+            <p class="valor-campo-contrato mb-3">{{ recargoTotal | currency:'COP':'symbol':'1.0-0' }}</p>
+
+            <p class="etiqueta-campo-contrato mb-1">Nuevo Valor Total Alquiler</p>
+            <p class="valor-total-contrato">{{ ((alquilerEncontrado?.valorAlquiler || 0) + recargoTotal) |
+              currency:'COP':'symbol':'1.0-0' }}</p>
+          </div>
+          }
+
+          <button type="button" class="boton boton-acento mt-4" (click)="marcarDisponible()">
+            Marcar vehículo como disponible
+          </button>
+        </div>
+        }
+
+        @if (liberacionConfirmada) {
+        <div class="resultado-busqueda mt-4">
+          <p class="valor-campo-contrato">
+            ✔ El vehículo quedó marcado como <span class="insignia-estado insignia-disponible">Disponible</span>
+            nuevamente.
+          </p>
+        </div>
+        }
+
+        @if (busquedaAlquilerRealizada && !alquilerEncontrado) {
+        <p class="texto-ayuda mt-3">
+          No se encontró ningún alquiler con ese número.
+        </p>
+        }
+      </div>
+    </section>
+    }
+
   </div>
 </main>

@@ -204,6 +204,28 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  buscarPorAlquiler(): void {
+    if (!this.inputAlquilerId) return;
+
+    this.busquedaAlquilerRealizada = true;
+    this.liberacionConfirmada = false;
+    this.fechaRealEntrega = '';
+    this.diasAdicionales = 0;
+    this.recargoTotal = 0;
+
+    this.adminService.buscarPorNumero(this.inputAlquilerId).subscribe({
+      next: (data: Alquileres) => {
+        this.zone.run(() => {
+          this.alquilerEncontrado = { ...data };
+          this.cdr.detectChanges();
+        });
+      },
+      error: () => {
+        this.alquilerEncontrado = null;
+        this.cdr.detectChanges();
+      }
+    });
+  }
 
   marcarEntregado(): void {
     const id = this.alquilerPlacaEncontrado?.idAlquiler;
@@ -233,5 +255,40 @@ export class AdminComponent implements OnInit {
     this.recargoTotal = this.diasAdicionales * this.VALOR_RECARGO_DIA;
   }
 
+  marcarDisponible(): void {
+  if (!this.alquilerEncontrado) return;
 
+  const totalCalculado = (this.alquilerEncontrado.valorAlquiler || 0) + this.recargoTotal;
+
+  const datosLiberacion = {
+    fechaEntrega: new Date(this.fechaRealEntrega),
+    valorDiasExtra: this.recargoTotal,
+    valorTotal: totalCalculado
+  };
+
+  this.adminService.marcarComoDisponible(this.alquilerEncontrado.idAlquiler, datosLiberacion).subscribe({
+    next: () => {
+      this.zone.run(() => {
+        this.liberacionConfirmada = true;
+        
+        // Actualizamos las listas locales para reflejar el nuevo total sin recargar toda la página
+        if (this.alquilerEncontrado) {
+          this.alquilerEncontrado.valorTotal = totalCalculado;
+          this.alquilerEncontrado.valorDiasExtra = this.recargoTotal;
+        }
+
+        // Si la pestaña de disponibles está activa, refrescar disponibilidad
+        if (this.tipoSeleccionadoId !== null) {
+          this.cargarDisponibles(this.tipoSeleccionadoId);
+        }
+
+        // Recargar la lista de todos los alquileres para traer los datos actualizados de la BD
+        this.cargarTodos();
+
+        this.cdr.detectChanges();
+      });
+    },
+    error: (err: any) => console.error('Error al marcar disponible:', err)
+  });
+}
 }
