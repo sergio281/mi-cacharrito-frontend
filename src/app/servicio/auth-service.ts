@@ -10,16 +10,16 @@ import { Admin } from '../entidades/admin';
 })
 export class AuthService {
 
-  private urlLogin = 'http://localhost:8080/IniciarSesion';
+  private url = 'http://localhost:8080/Usuario/IniciarSesion';
 
-  // Maneja la sesión global de la aplicación (Usuario o Admin)
   sesion$ = new BehaviorSubject<Usuario | Admin | null>(this.leerSesionGuardada());
 
   constructor(private http: HttpClient) { }
 
   // 1. Enviar credenciales
   autenticar(credenciales: { documento: string; password: string }): Observable<any> {
-    return this.http.post<any>(this.urlLogin, credenciales).pipe(
+    // CAMBIO AQUÍ: Usar this.url en lugar de this.urlLogin
+    return this.http.post<any>(this.url, credenciales).pipe(
       catchError((error: HttpErrorResponse) => throwError(() => this.obtenerMensajeError(error)))
     );
   }
